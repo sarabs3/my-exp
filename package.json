@@ -1,0 +1,26 @@
+{
+  "name": "redux-form-simple-example",
+  "version": "0.0.28",
+  "description": "A simple vanilla form written with redux-form.",
+  "keywords": [],
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^5.5.0",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-redux": "5.0.6",
+    "redux": "3.6.0",
+    "redux-form": "7.4.0",
+    "redux-form-website-template": "0.0.41",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
