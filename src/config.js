@@ -2,12 +2,12 @@ import firebase from 'firebase'
 
 // Initialize Firebase
 export const firebaseConfig = {
-    apiKey: "AIzaSyATBh9k7racaRziHL7LlnU3smqwslBn2mo",
-    authDomain: "sound-redux.firebaseapp.com",
-    databaseURL: "https://sound-redux.firebaseio.com",
-    projectId: "sound-redux",
-    storageBucket: "sound-redux.appspot.com",
-    messagingSenderId: "501523739170"
+    apiKey: "AIzaSyAGoLCar8hrofLN3wIUI41XFgOVODz_wSM",
+    authDomain: "my-exp-2e5af.firebaseapp.com",
+    databaseURL: "https://my-exp-2e5af.firebaseio.com",
+    projectId: "my-exp-2e5af",
+    storageBucket: "my-exp-2e5af.appspot.com",
+    messagingSenderId: "201538918294"
 };
 
 // Initialize firebase instance
