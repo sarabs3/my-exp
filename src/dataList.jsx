@@ -28,7 +28,8 @@ class Datalist extends React.Component {
         }, {
           Header: 'Date',
           id:'Date',
-          accessor: d => moment(d.value.date).format('MMM Do YYYY'),
+          asc:true,
+          accessor: d => moment(d.value.date).format('DD MMM YYYY'),
           Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
         }, {
           id: 'amount', // Required because our accessor is not a string
@@ -51,6 +52,9 @@ class Datalist extends React.Component {
               <li>
                   <Link to='page2'>List</Link>
               </li>
+              <li>
+                  <Link to='stats'>Stats</Link>
+              </li>
             </ul>
             <ReactTable data={this.props.data} columns={columns} />
           </React.Fragment>
@@ -58,4 +62,7 @@ class Datalist extends React.Component {
     }
 }
 
-export default compose(firebaseConnect(['data']),connect(({firebase}) => ({data: firebase.ordered.data})))(Datalist);
+export default compose(
+  firebaseConnect([{path: 'data', queryParams: ['orderByChild=date']}]),
+  connect(({firebase}) => ({data: firebase.ordered.data}))
+  )(Datalist);

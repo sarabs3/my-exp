@@ -8,6 +8,7 @@
     "firebase": "^5.5.0",
     "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-big-calendar": "^0.19.2",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.5.2",
     "react-motion": "^0.5.2",

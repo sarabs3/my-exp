@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import {Motion, spring, TransitionMotion} from 'react-motion';
+import Stats from './statsMonth';
 import SimpleForm from './SimpleForm';
 import Datalist from './dataList';
 
@@ -15,6 +16,7 @@ export default (props) => (
       {value => <div>{value.x}</div>}
     </Motion>
     )} />
+    <Route path="/stats" component={Stats} />
     <Route path="/" render={()=> <SimpleForm onSubmit={props.handleSubmit} />} />
   </Switch>
 );
