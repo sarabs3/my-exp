@@ -1,9 +1,10 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import {Motion, spring, TransitionMotion} from 'react-motion';
-import Stats from './statsMonth';
-import SimpleForm from './SimpleForm';
+import Stats from './pages/stats/Month';
+import SimpleForm from './pages/form';
 import Datalist from './dataList';
+import Dashboard from './pages/dashboard';
 
 export default (props) => (
   <Switch>
@@ -17,7 +18,8 @@ export default (props) => (
     </Motion>
     )} />
     <Route path="/stats" component={Stats} />
-    <Route path="/" render={()=> <SimpleForm onSubmit={props.handleSubmit} />} />
+    <Route path="/form"render={()=> <SimpleForm onSubmit={props.handleSubmit} />} />
+    <Route path="/" component={Dashboard}  />
   </Switch>
 );
 

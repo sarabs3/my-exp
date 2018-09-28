@@ -44,20 +44,7 @@ class Datalist extends React.Component {
           accessor: 'value.notes' // String-based value accessors!
         }]
         return (
-          <React.Fragment>
-            <ul>
-              <li>
-                  <Link to='/'>Add</Link>
-              </li>
-              <li>
-                  <Link to='page2'>List</Link>
-              </li>
-              <li>
-                  <Link to='stats'>Stats</Link>
-              </li>
-            </ul>
-            <ReactTable data={this.props.data} columns={columns} />
-          </React.Fragment>
+          <ReactTable data={this.props.data} columns={columns} />
         )
     }
 }

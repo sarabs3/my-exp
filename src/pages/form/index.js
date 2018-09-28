@@ -2,8 +2,14 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import {connect} from 'react-redux'
+import {compose} from 'redux'
+import {firebaseConnect} from 'react-redux-firebase'
 import 'react-datepicker/dist/react-datepicker.css';
 import {Link} from 'react-router-dom'
+import {Layout,  Row, Col, Card} from 'antd'
+
+const {Content} = Layout;
 
 class SimpleForm extends React.Component {
   constructor () {
@@ -25,15 +31,7 @@ class SimpleForm extends React.Component {
   render() {
   const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
-      <React.Fragment>
-        <ul>
-          <li>
-              <Link to='/'>Add</Link>
-          </li>
-          <li>
-              <Link to='/page2'>List</Link>
-          </li>
-        </ul>
+        <Content>
 
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -57,11 +55,9 @@ class SimpleForm extends React.Component {
             <label>Category</label>
             <div>
               <Field name="category" component="select">
-                <option />
-                <option value="food">Food</option>
-                <option value="health">Health</option>
-                <option value="clothes">Clothes</option>
-                <option value="living">Living</option>
+                {this.props.categories && this.props.categories.map(item => (
+                  <option value={item.value} key={item.key}>{item.value}</option>
+                ))}
               </Field>
             </div>
           </div>
@@ -100,8 +96,7 @@ class SimpleForm extends React.Component {
             </button>
           </div>
         </form>
-
-      </React.Fragment>
+        </Content>
     );
   }
 };
@@ -128,8 +123,10 @@ class DatePickerInput extends React.PureComponent {
   }
 }
 
-export default reduxForm({
+export default compose(
+  firebaseConnect(['Categories']),
+  connect(({firebase}) => ({categories: firebase.ordered.Categories})))(reduxForm({
   form: 'simple', // a unique identifier for this form
-})(SimpleForm);
+})(SimpleForm));
 
 

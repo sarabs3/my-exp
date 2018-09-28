@@ -31,6 +31,7 @@ class Datalist extends React.Component {
         }
     }
     createDate = data => {
+        console.log('data', data)
         return data ? data.map(item => {
             return {
                 start: moment().date(item.key).month(this.state.month.number).startOf('day'),
@@ -46,26 +47,13 @@ class Datalist extends React.Component {
             event: MyEvent
         }
         return (
-            <React.Fragment>
-                <ul>
-                    <li>
-                        <Link to='/'>Add</Link>
-                    </li>
-                    <li>
-                        <Link to='page2'>List</Link>
-                    </li>
-                    <li>
-                        <Link to='stats'>Stats</Link>
-                    </li>
-                </ul>
-                <Calendar
-                defaultDate={new Date()}
-                defaultView="month"
-                events={this.createDate(this.props.data)}
-                style={{ height: "100vh" }}
-                components={components}
-                />
-            </React.Fragment>
+            <Calendar
+            defaultDate={new Date()}
+            defaultView="month"
+            events={this.createDate(this.props.data)}
+            style={{ height: "100vh" }}
+            components={components}
+            />
         )
     }
 }

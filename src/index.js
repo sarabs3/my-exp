@@ -4,15 +4,14 @@ import { Provider } from "react-redux";
 import { BrowserRouter} from 'react-router-dom'
 import store from "./store";
 import App from './app'
+import 'antd/dist/antd.css';
 
 const rootEl = document.getElementById("root");
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <div style={{ padding: 15 }}>
-        <App />
-      </div>
+      <App />
     </Provider>
   </BrowserRouter>,
   rootEl

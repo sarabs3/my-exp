@@ -3,8 +3,11 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firebaseConnect} from 'react-redux-firebase'
 import {BrowserRouter as Router} from 'react-router-dom'
+import {Layout} from 'antd'
 import Routes from './routes'
+import Navigation from './components/menu';
 
+const {Header} = Layout;
 
 class App extends React.Component {
     handleSubmit = (values) => {
@@ -13,7 +16,12 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Routes handleSubmit={this.handleSubmit} />
+                <Layout>
+                    <Header>
+                        <Navigation />
+                    </Header>
+                    <Routes handleSubmit={this.handleSubmit} />
+                </Layout>
             </Router>
         )
     }
