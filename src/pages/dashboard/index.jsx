@@ -8,7 +8,7 @@ const {Content} = Layout;
 
 class Dashboard extends React.Component {
     render() {
-        const {Categories} = this.props;
+        const {Categories, paymentMode} = this.props;
         return (
             <Content>
                 <Row>
@@ -24,8 +24,8 @@ class Dashboard extends React.Component {
                     <Col span={6}>
                         <Card title="Most Spent By Category">
                         {Categories && Categories.map(item => (
-                        <p key={item.key}>{item.value} 500</p>
-                    ))}
+                            <p key={item.key}>{item.value} </p>
+                        ))}
                         </Card>
                     </Col>
                 </Row>
@@ -41,11 +41,9 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col span={6}>
                         <Card title="Spending Trend by Payment Method of Month ">
-                            <p>Kotak Credit Card: 1200</p>
-                            <p>Cash: 700</p>
-                            <p>HDFC Credit Card: 3000</p>
-                            <p>Debit Card: 1200</p>
-                            <p>Internet Banking: 3000</p>
+                            {paymentMode && paymentMode.map(item => (
+                                <p key={item.key}>{item.value} </p>
+                            ))}
                         </Card>
                     </Col>
                 </Row>
@@ -54,5 +52,8 @@ class Dashboard extends React.Component {
     }
 }
 
-export default compose(firebaseConnect(['Categories']),
-connect(({firebase}) => ({Categories: firebase.ordered.Categories})))(Dashboard);
+export default compose(firebaseConnect(['Categories', 'paymentMode']),
+connect(({firebase}) => ({
+    Categories: firebase.ordered.Categories,
+    paymentMode: firebase.ordered.paymentMode
+})))(Dashboard);

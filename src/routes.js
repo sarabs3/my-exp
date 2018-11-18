@@ -8,10 +8,7 @@ import Dashboard from './pages/dashboard';
 
 export default (props) => (
   <Switch>
-    <Route path="/page2" render={()=>(
-    
-    <Datalist />
-  )} />
+    <Route path="/list" component={Datalist} />
     <Route path="/page" render={()=>(
     <Motion defaultStyle={{x: 0}} style={{x: spring(10)}}>
       {value => <div>{value.x}</div>}

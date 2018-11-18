@@ -36,6 +36,10 @@ class Datalist extends React.Component {
           Header: 'Amount',
           accessor: d => d.value.amount // Custom value accessors!
         }, {
+          Header: 'Payment Mode',
+          accessor: 'value.mode'
+        },
+        {
           Header: props => <span>Category</span>, // Custom header components!
           accessor: 'value.category'
         },
@@ -44,7 +48,11 @@ class Datalist extends React.Component {
           accessor: 'value.notes' // String-based value accessors!
         }]
         return (
-          <ReactTable data={this.props.data} columns={columns} />
+          <ReactTable
+            data={this.props.data}
+            columns={columns}
+            filterable
+          />
         )
     }
 }

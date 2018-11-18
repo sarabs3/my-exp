@@ -12,7 +12,7 @@ class Navigation extends React.Component {
             >
                 <Menu.Item><Link to='/'>Home</Link></Menu.Item>
                 <Menu.Item><Link to='/form'>Add</Link></Menu.Item>
-                <Menu.Item><Link to='/page2'>List</Link></Menu.Item>
+                <Menu.Item><Link to='/list'>List</Link></Menu.Item>
                 <Menu.Item><Link to='/stats'>Stats</Link></Menu.Item>
             </Menu>
          )

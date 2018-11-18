@@ -73,11 +73,25 @@ class SimpleForm extends React.Component {
             </div>
           </div>
           <div>
-            <label htmlFor="employed">Calculate</label>
+            <label>Payment Mode</label>
+            <div>
+              <Field name="mode" component="select">
+                <option value='cash'>Cash</option>
+                <option value='kotak_credit'>Kotak Credit Card</option>
+                <option value='kotak_debit'>Kotak Debit Card</option>
+                <option value='hdfc_credit'>HDFC Credit Card</option>
+                <option value='hdfc_debit'>HDFC Debit Card</option>
+                <option value='axis'>Axis Bank</option>
+                <option value='paytm'>Paytm</option>
+              </Field>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="calculate">Calculate</label>
             <div>
               <Field
-                name="employed"
-                id="employed"
+                name="calculate"
+                id="calculate"
                 component="input"
                 type="checkbox"
               />
@@ -124,8 +138,11 @@ class DatePickerInput extends React.PureComponent {
 }
 
 export default compose(
-  firebaseConnect(['Categories']),
-  connect(({firebase}) => ({categories: firebase.ordered.Categories})))(reduxForm({
+  firebaseConnect(['Categories', 'paymentMode']),
+  connect(({firebase}) => ({
+    categories: firebase.ordered.Categories,
+    paymentMode: firebase.ordered.paymentMode
+  })))(reduxForm({
   form: 'simple', // a unique identifier for this form
 })(SimpleForm));
 
