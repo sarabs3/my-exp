@@ -1,11 +1,9 @@
-import ReactTable from "react-table";
 import React from 'react';
 import 'react-table/react-table.css'
 import moment from 'moment';
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import {firebaseConnect} from 'react-redux-firebase'
-import {Link} from 'react-router-dom'
 import Calendar from "react-big-calendar";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";

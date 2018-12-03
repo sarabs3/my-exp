@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import {Motion, spring, TransitionMotion} from 'react-motion';
 import Stats from './pages/stats/Month';
 import SimpleForm from './pages/form';

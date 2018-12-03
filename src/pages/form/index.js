@@ -6,8 +6,7 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firebaseConnect} from 'react-redux-firebase'
 import 'react-datepicker/dist/react-datepicker.css';
-import {Link} from 'react-router-dom'
-import {Layout,  Row, Col, Card} from 'antd'
+import {Layout} from 'antd'
 
 const {Content} = Layout;
 

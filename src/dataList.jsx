@@ -5,7 +5,6 @@ import moment from 'moment';
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import {firebaseConnect} from 'react-redux-firebase'
-import {Link} from 'react-router-dom'
 
 
 class Datalist extends React.Component {
