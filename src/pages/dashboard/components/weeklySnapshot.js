@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,  Row, Col} from 'antd';
+import {Card} from 'antd';
 
 const days = [
     'Monday',

@@ -28,7 +28,7 @@ class SimpleForm extends React.Component {
     this.props.handleSubmit()
   }
   render() {
-  const { handleSubmit, pristine, reset, submitting } = this.props;
+  const { pristine, reset, submitting } = this.props;
     return (
         <Content>
 

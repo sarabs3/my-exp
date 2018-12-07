@@ -8,6 +8,7 @@ import SpentWidget from './components/spentWidget';
 import PredictionWidget from './components/predictionWidget';
 import PaymentMethodWidget from './components/paymentMethodWidget';
 import WeeklySnapshot from './components/weeklySnapshot';
+import TodaySnapshot from './components/todaySnapshot';
 
 const {Content} = Layout;
 
@@ -29,6 +30,11 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col span={12}>
                         <WeeklySnapshot />
+                        <Row>
+                            <Col span={12}>
+                                <TodaySnapshot />
+                            </Col>
+                        </Row>
                     </Col>
                     <Col span={6}>
                         <Row>

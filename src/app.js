@@ -16,12 +16,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <Layout>
-                    <Header>
-                        <Navigation />
-                    </Header>
-                    <Routes handleSubmit={this.handleSubmit} />
-                </Layout>
+                <Routes handleSubmit={this.handleSubmit} />
             </Router>
         )
     }
