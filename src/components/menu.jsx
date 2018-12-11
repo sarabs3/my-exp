@@ -10,12 +10,12 @@ class Navigation extends React.Component {
                 theme="dark"
                 style={{lineHeight: '64px'}}
             >
-                <Menu.Item><Link to='/'>Home</Link></Menu.Item>
-                <Menu.Item><Link to='/form'>Add</Link></Menu.Item>
-                <Menu.Item><Link to='/list'>List</Link></Menu.Item>
-                <Menu.Item><Link to='/stats'>Stats</Link></Menu.Item>
+                <Menu.Item><Link to='/dashboard'>Home</Link></Menu.Item>
+                <Menu.Item><Link to='/dashboard/form'>Add</Link></Menu.Item>
+                <Menu.Item><Link to='/dashboard/list'>List</Link></Menu.Item>
+                <Menu.Item><Link to='/dashboard/stats'>Stats</Link></Menu.Item>
             </Menu>
-         )
+        )
     }
 }
 
