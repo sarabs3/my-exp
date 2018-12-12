@@ -1,7 +1,7 @@
 {
-  "name": "redux-form-simple-example",
-  "version": "0.0.28",
-  "description": "A simple vanilla form written with redux-form.",
+  "name": "my-exp",
+  "version": "0.0.1",
+  "description": "Track and Manage expenses",
   "keywords": [],
   "main": "index.js",
   "dependencies": {
@@ -12,15 +12,19 @@
     "react-big-calendar": "^0.19.2",
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.5.2",
+    "react-loader-spinner": "^2.3.0",
+    "react-media": "^1.6.0",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.7",
     "react-redux-firebase": "^2.1.8",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
+    "react-transition-group": "^2.5.1",
     "redux": "3.6.0",
-    "redux-form": "7.4.0",
+    "redux-form": "^7.4.2",
     "redux-form-website-template": "0.0.41",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.1.2"
   },
   "devDependencies": {
     "react-scripts": "1.0.0"
