@@ -32,9 +32,9 @@ const columns = [{
   accessor: 'value.notes' // String-based value accessors!
 }]
 
-const Datalist = () => (
+const Datalist = (props) => (
   <ReactTable
-    data={this.props.data}
+    data={props.data}
     columns={columns}
     filterable
   />

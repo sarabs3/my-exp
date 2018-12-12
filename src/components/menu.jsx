@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Button } from 'antd';
 import {Link} from 'react-router-dom'
 
 class Navigation extends React.Component {
@@ -14,6 +14,7 @@ class Navigation extends React.Component {
                 <Menu.Item><Link to='/dashboard/form'>Add</Link></Menu.Item>
                 <Menu.Item><Link to='/dashboard/list'>List</Link></Menu.Item>
                 <Menu.Item><Link to='/dashboard/stats'>Stats</Link></Menu.Item>
+                <Menu.Item><Button><Link to='/logout'>Logout</Link></Button></Menu.Item>
             </Menu>
         )
     }

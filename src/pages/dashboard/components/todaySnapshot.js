@@ -4,36 +4,36 @@ import { Button } from 'antd';
 import { List, Avatar } from 'antd';
 import {Link} from 'react-router-dom';
 import categoryIcon from '../../../assets/categoryIcon.svg'
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-const days = [
-    {title: 'Monday', amount: 50},
-    {title: 'Tuesday', amount: 1675},
-    {title: 'Wednesday', amount: 32},
-    {title: 'Thursday', amount: 140},
-    {title: 'Friday', amount: 100},
-    {title: 'Saturday', amount: 190},
-    {title: 'Sunday', amount: 850}
-];
-const TodaySnapshot = () => (
+const filterData = data => data ? data.filter(item => moment().isSame(item.value.date, 'day')) : [];
+const TodaySnapshot = ({data}) => (
     <Card
         title="Today Snapshot"
-        extra={<Link to="/form"><Button>Add New Entry</Button></Link>}
+        extra={<Link to="/dashboard/form"><Button>Add New Entry</Button></Link>}
     >
         <List
             itemLayout="horizontal"
-            dataSource={days}
+            dataSource={filterData(data)}
             renderItem={item => (
                 <List.Item>
                     <List.Item.Meta
                         avatar={<Avatar src={categoryIcon} />}
-                        title={item.title}
-                        description={item.amount}
+                        title={item.value.title}
+                        description={item.value.amount}
                     />
                 </List.Item>
             )}
         />
     </Card>
-)
+);
 
+TodaySnapshot.propTypes = {
+    data: PropTypes.array,
+}
+TodaySnapshot.defaultProps = {
+    data: [],
+}
 
 export default TodaySnapshot;
