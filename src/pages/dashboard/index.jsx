@@ -10,6 +10,8 @@ import PaymentMethodWidget from './components/paymentMethodWidget';
 import WeeklySnapshot from './components/weeklySnapshot';
 import TodaySnapshot from './components/todaySnapshot';
 import Media from "react-media";
+import { Button, Divider } from 'antd';
+import { Link } from "react-router-dom";
 
 const {Content} = Layout;
 
@@ -33,7 +35,20 @@ class Dashboard extends React.Component {
                     <Media query="(max-width: 900px)">
                         {matches => matches ? (
                             <Col span={24}>
-                                <Leftbar data={data} Categories={Categories} />
+                                <Row>
+                                    <Col span={24}>
+                                        <TodaySnapshot data={this.props.data} />
+                                    </Col>
+                                    <Col span={24}>
+                                        <Button type="primary" block size="large">
+                                            <Link to="/dashboard/weekly">Weekly Summary</Link>
+                                        </Button>
+                                        <Divider />
+                                        <Button type="primary" block size="large">
+                                            <Link to="/dashboard/month">Month Summary</Link>
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </Col>
                     ) : (
                             <Col span={6}>
