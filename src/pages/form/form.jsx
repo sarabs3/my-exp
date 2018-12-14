@@ -59,7 +59,7 @@ class SimpleForm extends React.Component {
                         <h1>Log Entry</h1>
                         <Divider />
                         <Form onSubmit={handleSubmit}>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field
                                     name="title"
                                     component={InputWrap}
@@ -67,13 +67,13 @@ class SimpleForm extends React.Component {
                                     placeholder="Title"
                                 />
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field
                                     name='date'
                                     component={DatePickerInput}
                                 />
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field
                                     name="category"
                                     component={SelectWrap}
@@ -96,7 +96,7 @@ class SimpleForm extends React.Component {
                                     }
                                 </Field>
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field
                                     name="amount"
                                     component={InputWrap}
@@ -104,7 +104,7 @@ class SimpleForm extends React.Component {
                                     placeholder="Amount"
                                     />
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field
                                     name="mode"
                                     component={SelectWrap}
@@ -127,7 +127,7 @@ class SimpleForm extends React.Component {
                                     }
                                 </Field>
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <label>Count </label>
                                 <Field
                                     name="calculate"
@@ -136,10 +136,10 @@ class SimpleForm extends React.Component {
                                     type='checkbox'
                                 />
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Field name="notes" component={TextArea} />
                             </FormItem>
-                            <FormItem style={styles.FormItem}>
+                            <FormItem>
                                 <Row>
                                     <Col span={12}>
                                         <Button
