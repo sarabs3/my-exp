@@ -1,0 +1,1 @@
+export const sort = (data, sort) => {console.log('sort', sort);return sort ? data.reverse() : data;}

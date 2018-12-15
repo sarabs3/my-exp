@@ -8,19 +8,21 @@ import moment from 'moment';
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import Stats from "../components/stats";
+import { sort } from "../utils";
 
 const filterData = data => data ? data.filter(item => {
     console.log('difference day', moment().diff(1544307320182, 'day'));
     return moment().diff(item.value.date, 'day') < 31
     }) : [];
-const TodaySnapshot = ({data, title}) => (
+const TodaySnapshot = ({data, title, sorted}) => (
     <Card
         title={title}
         extra={<Link to="/dashboard/form"><Button>Add New Entry</Button></Link>}
     >
         <List
             itemLayout="horizontal"
-            dataSource={filterData(data)}
+            dataSource={sort(filterData(data), sorted)}
             renderItem={item => (
                 <List.Item>
                     <List.Item.Meta
@@ -36,46 +38,28 @@ const TodaySnapshot = ({data, title}) => (
 
 TodaySnapshot.propTypes = {
     data: PropTypes.array,
+    sorted: PropTypes.bool,
+    title: PropTypes.string
 }
 TodaySnapshot.defaultProps = {
     data: [],
 }
 
-const Stats = ({data, title}) => (
-    <Card
-        title={title}
-    >
-        <List
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-                <List.Item>
-                    <List.Item.Meta
-                        avatar={<Avatar src='' />}
-                        title={item.title}
-                        description={item.amount}
-                    />
-                </List.Item>
-            )}
-        />
-    </Card>
-);
 
-const generateStats = data => {
+const generateStats = (data) => {
     if ( data) {
         const totalSpent =  data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b);
-        console.log('total', totalSpent)
         return [{
-            title: 'Total Spent',
+            title: 'Transections',
+            amount: data.length,
+            actions: <Link to='/dashboard/transections'>View All</Link>
+        },{
+            title: 'Spent',
             amount: totalSpent
         },
         {
             title: 'Per Day Average',
-            amount: totalSpent / 30
-        },
-        {
-            title: 'Exp',
-            amount: 0
+            amount: (totalSpent / 30).toFixed(2)
         },
         {
             title: 'Income',
@@ -91,12 +75,12 @@ const generateStats = data => {
         return []
     }
 }
-const Summary = (props) => {
-    const stats = generateStats(props.data)
+const Summary = ({data, sorted = true}) => {
+    const stats = generateStats(data)
     return (
         <React.Fragment>
             <Stats title="Monthly Summary" data={stats} />
-            <TodaySnapshot title="Monthly Transections" data={props.data} />
+            <TodaySnapshot avatar={false} title="Monthly Transections" data={data} sorted/>
         </React.Fragment>
     )
 };
@@ -107,7 +91,8 @@ const enhancer = compose(
             [
                 {
                     path: `data/${props.uid}`,
-                    storeAs: 'data'
+                    storeAs: 'data',
+                    queryParams: ['orderByChild=date']
                 }
             ]
         )

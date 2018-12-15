@@ -8,6 +8,8 @@ import moment from 'moment';
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import Stats from "../components/stats";
+import { sort } from "../utils";
 
 const filterData = data => data ? data.filter(item => {
     console.log('difference day', moment().diff(1544307320182, 'day'));
@@ -41,27 +43,8 @@ TodaySnapshot.defaultProps = {
     data: [],
 }
 
-const Stats = ({data, title}) => (
-    <Card
-        title={title}
-    >
-        <List
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={item => (
-                <List.Item>
-                    <List.Item.Meta
-                        avatar={<Avatar src='' />}
-                        title={item.title}
-                        description={item.amount}
-                    />
-                </List.Item>
-            )}
-        />
-    </Card>
-);
 
-const generateStats = data => {
+const generateStats = (data) => {
     if ( data) {
         const totalSpent =  data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b);
         console.log('total', totalSpent)
@@ -91,12 +74,12 @@ const generateStats = data => {
         return []
     }
 }
-const Summary = (props) => {
-    const stats = generateStats(props.data)
+const Summary = ({data, sorted = true}) => {
+    const stats = generateStats(data)
     return (
         <React.Fragment>
             <Stats title="Weekly Summary" data={stats} />
-            <TodaySnapshot title="Weekly Transections" data={props.data} />
+            <TodaySnapshot title="Weekly Transections" data={data} />
         </React.Fragment>
     )
 };
@@ -107,7 +90,8 @@ const enhancer = compose(
             [
                 {
                     path: `data/${props.uid}`,
-                    storeAs: 'data'
+                    storeAs: 'data',
+                    queryParams: ['orderByChild=date']
                 }
             ]
         )
