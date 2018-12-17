@@ -12,17 +12,20 @@ import Stats from "../components/stats";
 import Snapshot from "../components/snapshot";
 import { sort } from "../utils";
 
-const generateStats = data => {
+const concatValues = data => data.reduce(
+    (a,b) => (
+        {
+            value: {
+                amount: parseFloat(a.value.amount) + parseFloat(b.value.amount)
+            }
+        }
+    )
+).value.amount;
+const generateStats = (data, total) => {
     if ( data.length ) {
-        const totalSpent = data.reduce(
-            (a,b) => (
-                {
-                    value: {
-                        amount: parseFloat(a.value.amount) + parseFloat(b.value.amount)
-                    }
-                }
-            )
-        ).value.amount;
+        const totalSpent = concatValues(data);
+        let notToCount = data.filter(item => !item.value.mode.includes('Credit'));
+        notToCount = concatValues(notToCount);
         return [
             {
                 title: 'Transections',
@@ -38,18 +41,23 @@ const generateStats = data => {
                 amount: (totalSpent / 7).toFixed(2)
             },
             {
-                title: 'Exp',
-                amount: 0
+                title: 'Cash Exp',
+                amount: totalSpent - notToCount
             },
             {
-                title: 'Income',
+                title: 'Credit Exp',
+                amount: notToCount
             },
             {
-                title: 'Not To Count'
+                title: 'Per Day Average Month',
+                amount: (total/moment().date()).toFixed(2)
             },
-            {
-                title: 'Savings'
-            }
+            // {
+            //     title: 'Income',
+            // },
+            // {
+            //     title: 'Savings'
+            // }
         ]
     } else {
         return []
@@ -81,7 +89,7 @@ class Summary extends React.Component {
             return null;
         }
         const filteredData = this.filterData(data);
-        const stats = generateStats(filteredData);
+        const stats = generateStats(filteredData, concatValues(data));
         const transectionsdata = sort(filteredData, sorted);
         return (
             <React.Fragment>

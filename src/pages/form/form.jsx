@@ -38,7 +38,11 @@ class SimpleForm extends React.Component {
     }
     // handlesubmit
     handleSubmit = (e) => {
-        e.preventDefault();
+        if (e.mode.includes('Credit') || e.mode === 'Paytm') {
+            e.calculate = false;
+        } else {
+            e.calculate = true;
+        }
         this.props.reset()
         this.props.handleSubmit()
     }
@@ -58,7 +62,7 @@ class SimpleForm extends React.Component {
                         <Divider />
                         <h1>Log Entry</h1>
                         <Divider />
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={handleSubmit(this.handleSubmit)}>
                             <FormItem>
                                 <Field
                                     name="title"
