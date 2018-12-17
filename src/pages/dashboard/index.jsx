@@ -8,27 +8,77 @@ import SpentWidget from './components/spentWidget';
 import PredictionWidget from './components/predictionWidget';
 import PaymentMethodWidget from './components/paymentMethodWidget';
 import WeeklySnapshot from './components/weeklySnapshot';
-import TodaySnapshot from './components/todaySnapshot';
+import Snapshot from "../../components/snapshot";
+import Stats from "../../components/stats";
 import Media from "react-media";
 import { Button, Divider } from 'antd';
 import { Link } from "react-router-dom";
+import moment from 'moment';
+import { concatValues } from "../../utils";
 
 const {Content} = Layout;
 
 const Leftbar = (props) => (
     <Row>
         <Col span={24}>
-            <TodaySnapshot data={props.data} />
+            <Snapshot
+                title='Today Snapshot'
+                type='today'
+                data={props.data ? filterData(props.data) : []}
+                icon
+            />
         </Col>
         <Col span={24}>
             <SpentWidget categories={props.Categories} />
         </Col>
     </Row>
 )
+const filterData = data => data.length ? data.filter(item => moment().isSame(item.value.date, 'day')) : [];
+const generateStats = (data, total) => {
+    if ( data.length ) {
+        const totalSpent = concatValues(data);
+        let notToCount = data.filter(item => !item.value.mode.includes('Credit'));
+        notToCount = concatValues(notToCount);
+        return [
+            {
+                title: 'Transections',
+                amount: data.length,
+                actions: <Link to='/dashboard/transections'>View All</Link>
+            },
+            {
+                title: 'Total Spent',
+                amount: totalSpent
+            },
+            {
+                title: 'Week Average',
+                amount: (totalSpent / 7).toFixed(2)
+            },
+            {
+                title: 'Cash Exp',
+                amount: totalSpent - notToCount
+            },
+            {
+                title: 'Credit Exp',
+                amount: notToCount
+            },
+            {
+                title: 'Per Day Average Month',
+                amount: (total/moment().date()).toFixed(2)
+            }
+        ]
+    } else {
+        return []
+    }
+}
 class Dashboard extends React.Component {
+
     render() {
-        console.log('props', this.props)
         const {Categories = [], paymentMode = [], data} = this.props;
+        if (!data) {
+            return null
+        }
+        const filteredData = filterData(data);
+        const stats = generateStats(filteredData, concatValues(data));
         return (
             <Content>
                 <Row>
@@ -37,7 +87,18 @@ class Dashboard extends React.Component {
                             <Col span={24}>
                                 <Row>
                                     <Col span={24}>
-                                        <TodaySnapshot data={this.props.data} />
+                                        <Stats
+                                            title="Recent Stats"
+                                            data={stats}
+                                            component={
+                                                <Button onClick={this.prevWeek}>Previous Week</Button>
+                                            }
+                                        />
+                                        <Snapshot
+                                            title='Today Transections'
+                                            type='today'
+                                            data={data ? filterData(data) : []}
+                                        />
                                     </Col>
                                     <Col span={24}>
                                         <Button type="primary" block size="large">

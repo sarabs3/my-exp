@@ -5,8 +5,9 @@ import { List, Avatar } from 'antd';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
+import categoryIcon from '../assets/categoryIcon.svg'
 
-const Snapshot = ({data, title, icon}) => (
+const Snapshot = ({data, title, icon, type}) => (
     <Card
         title={title}
         extra={(
@@ -28,9 +29,7 @@ const Snapshot = ({data, title, icon}) => (
                                 icon ? <Avatar src={avatar} /> : null
                             }
                             title={title}
-                            description={
-                                `Amount ${amount} | Date ${formatedDate}`
-                            }
+                            description={type === 'today' ? amount : `Amount ${amount} | Date ${formatedDate}`}
                         />
                     </List.Item>
                 )

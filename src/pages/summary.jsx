@@ -10,17 +10,8 @@ import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import Stats from "../components/stats";
 import Snapshot from "../components/snapshot";
-import { sort } from "../utils";
+import { sort, concatValues } from "../utils";
 
-const concatValues = data => data.reduce(
-    (a,b) => (
-        {
-            value: {
-                amount: parseFloat(a.value.amount) + parseFloat(b.value.amount)
-            }
-        }
-    )
-).value.amount;
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
