@@ -9,23 +9,20 @@ import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import Stats from "../components/stats";
+import Snapshot from "../components/snapshot";
 import { sort } from "../utils";
 
-const filterData = data => data ? data.filter(
-    item => {
-        const dayOfWeek = moment().day();
-        const startOfWeek = (
-            moment().add(`-${dayOfWeek}`, 'day').startOf('day').unix()
-        )*1000;
-        return moment(item.value.date).isBetween(startOfWeek, moment().endOf('day'))
-    }
-    ) : [];
-
-
-const generateStats = (data) => {
-    if ( data) {
-        const totalSpent =  data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b);
-        console.log('total', totalSpent)
+const generateStats = data => {
+    if ( data.length ) {
+        const totalSpent = data.reduce(
+            (a,b) => (
+                {
+                    value: {
+                        amount: parseFloat(a.value.amount) + parseFloat(b.value.amount)
+                    }
+                }
+            )
+        ).value.amount;
         return [
             {
                 title: 'Transections',
@@ -38,7 +35,7 @@ const generateStats = (data) => {
             },
             {
                 title: 'Week Average',
-                amount: totalSpent / 7
+                amount: (totalSpent / 7).toFixed(2)
             },
             {
                 title: 'Exp',
@@ -58,14 +55,47 @@ const generateStats = (data) => {
         return []
     }
 }
-const Summary = ({data, sorted = true}) => {
-    const stats = generateStats(data)
-    return (
-        <React.Fragment>
-            <Stats title="Weekly Summary" data={stats} />
-            <TodaySnapshot title="Weekly Transections" data={sort(filterData(data), sorted)} sorted={sorted} />
-        </React.Fragment>
-    )
+class Summary extends React.Component {
+    state = {
+        dayOfWeek: moment().day(),
+        today: moment(),
+        startOfWeek: (moment().add(`-${moment().day()}`, 'day').startOf('day').unix())*1000,
+        currentWeek: 0
+    }
+    prevWeek = () => {
+        this.setState(state => ({
+            currentWeek: state.currentWeek - 1,
+            today: moment().add(`-${moment().day() + 1}`, 'day'),
+            startOfWeek: (moment().add(`-${moment().day() + 7}`, 'day').startOf('day').unix())*1000
+        }))
+    }
+    filterData = data => data ? data.filter(
+        item => {
+            const {startOfWeek, today} = this.state;
+            return moment(item.value.date).isBetween(startOfWeek, today.endOf('day'))
+        }
+    ) : [];
+    render () {
+        const {data, sorted = true} = this.props;
+        if (!data) {
+            return null;
+        }
+        const filteredData = this.filterData(data);
+        const stats = generateStats(filteredData);
+        const transectionsdata = sort(filteredData, sorted);
+        return (
+            <React.Fragment>
+                <Stats
+                    title="Weekly Summary"
+                    data={stats}
+                    component={
+                        <Button onClick={this.prevWeek}>Previous Week</Button>
+                    }
+                />
+                <Snapshot title="Weekly Transections" data={transectionsdata} sorted={sorted} />
+            </React.Fragment>
+        )
+    }
 };
 
 const enhancer = compose(

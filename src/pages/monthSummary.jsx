@@ -7,7 +7,7 @@ import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import Stats from "../components/stats";
 import { sort } from "../utils";
-import TodaySnapshot from "../components/snapshot";
+import Snapshot from "../components/snapshot";
 const filterData = data => data ? data.filter(item => {
     console.log('difference day', moment().diff(1544307320182, 'day'));
     return moment().diff(item.value.date, 'day') < 31
@@ -47,7 +47,7 @@ const Summary = ({data, sorted = true}) => {
     return (
         <React.Fragment>
             <Stats title="Monthly Summary" data={stats} />
-            <TodaySnapshot avatar={false} title="Monthly Transections" data={sort(filterData(data), sorted)} sorted/>
+            <Snapshot avatar={false} title="Monthly Transections" data={sort(filterData(data), sorted)} sorted/>
         </React.Fragment>
     )
 };

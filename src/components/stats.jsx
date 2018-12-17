@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, List, Avatar } from "antd";
-import { sort } from "../utils";
-const Stats = ({data, title, avatar}) => (
-    <Card title={title} >
+const Stats = ({data, title, avatar, component}) => (
+    <Card
+        title={title}
+        extra={component}
+    >
         <List
             itemLayout="horizontal"
             dataSource={data}
