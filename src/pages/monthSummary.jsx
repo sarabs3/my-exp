@@ -8,9 +8,10 @@ import { compose } from "redux";
 import Stats from "../components/stats";
 import { sort } from "../utils";
 import Snapshot from "../components/snapshot";
-const filterData = data => data ? data.filter(item => {
-    console.log('difference day', moment().diff(1544307320182, 'day'));
-    return moment().diff(item.value.date, 'day') < 31
+const filterData = data => data.length ? data.filter(item => {
+    const start = moment().startOf('month');
+    const end = moment().endOf('month');
+    return moment(item.value.date).isBetween(start, end)
     }) : [];
 
 const generateStats = (data) => {
@@ -43,7 +44,10 @@ const generateStats = (data) => {
     }
 }
 const Summary = ({data, sorted = true}) => {
-    const stats = generateStats(data)
+    if (!data) {
+        return null;
+    }
+    const stats = generateStats(filterData(data))
     return (
         <React.Fragment>
             <Stats title="Monthly Summary" data={stats} />
