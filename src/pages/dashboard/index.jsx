@@ -4,32 +4,37 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firebaseConnect, getVal } from 'react-redux-firebase'
 import HistoryWidget from './components/historyWidget';
-import SpentWidget from './components/spentWidget';
 import PredictionWidget from './components/predictionWidget';
 import PaymentMethodWidget from './components/paymentMethodWidget';
 import WeeklySnapshot from './components/weeklySnapshot';
-import Snapshot from "../../components/snapshot";
-import Stats from "../../components/stats";
 import Media from "react-media";
 import { Button, Divider } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import { concatValues } from "../../utils";
 
+const Snapshot = React.lazy(() => import('../../components/snapshot'));
+const SpentWidget = React.lazy(() => import('./components/spentWidget'));
+const Stats = React.lazy(() => import('../../components/stats'));
+
 const {Content} = Layout;
 
 const Leftbar = (props) => (
     <Row>
         <Col span={24}>
-            <Snapshot
-                title='Today Snapshot'
-                type='today'
-                data={props.data ? filterData(props.data) : []}
-                icon
-            />
+            <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                <Snapshot
+                    title='Today Snapshot'
+                    type='today'
+                    data={props.data ? filterData(props.data) : []}
+                    icon
+                />
+            </React.Suspense>
         </Col>
         <Col span={24}>
-            <SpentWidget categories={props.Categories} />
+            <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                <SpentWidget categories={props.Categories} />
+            </React.Suspense>
         </Col>
     </Row>
 )
@@ -87,18 +92,22 @@ class Dashboard extends React.Component {
                             <Col span={24}>
                                 <Row>
                                     <Col span={24}>
-                                        <Stats
-                                            title="Recent Stats"
-                                            data={stats}
-                                            component={
-                                                <Button onClick={this.prevWeek}>Previous Week</Button>
-                                            }
-                                        />
-                                        <Snapshot
-                                            title='Today Transections'
-                                            type='today'
-                                            data={data ? filterData(data) : []}
-                                        />
+                                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                                            <Stats
+                                                title="Recent Stats"
+                                                data={stats}
+                                                component={
+                                                    <Button onClick={this.prevWeek}>Previous Week</Button>
+                                                }
+                                            />
+                                        </React.Suspense>
+                                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                                            <Snapshot
+                                                title='Today Transections'
+                                                type='today'
+                                                data={data ? filterData(data) : []}
+                                            />
+                                        </React.Suspense>
                                     </Col>
                                     <Col span={24}>
                                         <Button type="primary" block size="large">
