@@ -73,6 +73,14 @@ class SimpleForm extends React.Component {
                             </FormItem>
                             <FormItem>
                                 <Field
+                                    name="amount"
+                                    component={InputWrap}
+                                    type="text"
+                                    placeholder="Amount"
+                                    />
+                            </FormItem>
+                            <FormItem>
+                                <Field
                                     name='date'
                                     component={DatePickerInput}
                                 />
@@ -81,7 +89,7 @@ class SimpleForm extends React.Component {
                                 <Field
                                     name="category"
                                     component={SelectWrap}
-                                    defaultValue=''
+                                    defaultValue='food'
                                 >
                                     <Option value=''>
                                         -- Select Category --
@@ -102,17 +110,9 @@ class SimpleForm extends React.Component {
                             </FormItem>
                             <FormItem>
                                 <Field
-                                    name="amount"
-                                    component={InputWrap}
-                                    type="text"
-                                    placeholder="Amount"
-                                    />
-                            </FormItem>
-                            <FormItem>
-                                <Field
                                     name="mode"
                                     component={SelectWrap}
-                                    defaultValue=''
+                                    defaultValue='cash'
                                 >
                                     <Option value=''>
                                         -- Select Payment Method --
@@ -131,6 +131,7 @@ class SimpleForm extends React.Component {
                                     }
                                 </Field>
                             </FormItem>
+                            {/*
                             <FormItem>
                                 <label>Count </label>
                                 <Field
@@ -143,6 +144,7 @@ class SimpleForm extends React.Component {
                             <FormItem>
                                 <Field name="notes" component={TextArea} />
                             </FormItem>
+                            */}
                             <FormItem>
                                 <Row>
                                     <Col span={12}>

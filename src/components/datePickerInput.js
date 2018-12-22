@@ -13,6 +13,7 @@ class DatePickerInput extends React.PureComponent {
                 <label className='form-col-form-label' htmlFor={input.name}> {required ? '*' : ''}</label>
                 <DatePicker {...rest}
                     autoOk
+                    defaultValue={moment()}
                     onChange={this.handleChange}
                     selected={input.value ? moment(input.value) : null} />
                 {touched && error && <span className='error-block'>{error}</span>}
