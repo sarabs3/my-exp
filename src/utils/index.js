@@ -1,6 +1,6 @@
 export const sort = (data, sort) => {console.log('sort', sort);return sort ? data.reverse() : data;}
 
-export const concatValues = data => data.reduce(
+export const concatValues = data => parseFloat(data.reduce(
     (a,b) => (
         {
             value: {
@@ -8,4 +8,4 @@ export const concatValues = data => data.reduce(
             }
         }
     )
-).value.amount;
+).value.amount);
