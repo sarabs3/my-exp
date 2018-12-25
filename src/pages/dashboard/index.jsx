@@ -43,10 +43,10 @@ const filterData = data => data.length ? data.filter(item => moment().isSame(ite
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
-        let notToCount = data.filter(item => !item.value.mode.includes('Credit'));
-        let Savings = data.filter(item => item.value.category.includes('Savings'))
+        let notToCount = data.filter(item => item.value.mode ? !item.value.mode.includes('Credit') : false);
+        let Savings = data.filter(item => item.value.category ? item.value.category.includes('Savings') : false);
         Savings = Savings.length ? concatValues(Savings).toFixed(2) : 0;
-        notToCount = concatValues(notToCount).toFixed(2);
+        notToCount = notToCount.length ? concatValues(notToCount).toFixed(2) : 0;
         return [
             {
                 title: 'Transections',
