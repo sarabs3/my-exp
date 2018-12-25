@@ -27,12 +27,15 @@
     "styled-components": "^4.1.2"
   },
   "devDependencies": {
+    "firebase-tools": "^6.2.2",
     "react-scripts": "1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy":"./node_modules/.bin/firebase deploy",
+    "login":"./node_modules/.bin/firebase login"
   }
 }
