@@ -38,6 +38,12 @@ class SimpleForm extends React.Component {
     }
     // handlesubmit
     handleSubmit = (e) => {
+        if (!e.mode)
+            e.mode = 'Cash'
+        if(!e.category)
+            e.category = 'food'
+        if (!e.date)
+            e.date = moment().unix()*1000
         if (e.mode.includes('Credit') || e.mode === 'Paytm') {
             e.calculate = false;
         } else {
@@ -112,7 +118,7 @@ class SimpleForm extends React.Component {
                                 <Field
                                     name="mode"
                                     component={SelectWrap}
-                                    defaultValue='cash'
+                                    defaultValue='Cash'
                                 >
                                     <Option value=''>
                                         -- Select Payment Method --
