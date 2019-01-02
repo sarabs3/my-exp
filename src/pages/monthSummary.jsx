@@ -12,7 +12,7 @@ import { currentMonth } from "../services/currentMonth";
 
 const generateStats = (data) => {
     if ( data) {
-        const totalSpent =  data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b);
+        const totalSpent = data.length ? data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b) : 0;
         return [{
             title: 'Transections',
             amount: data.length,

@@ -17,6 +17,8 @@ import Summary from '../pages/summary'
 import MonthSummary from "../pages/monthSummary";
 import Transections from '../pages/transections';
 import ErrorBoundary from '../components/errorBoundry';
+import Reports from '../pages/reports';
+import ReportsDetail from '../pages/reports/reportsDetail';
 import '../pageAnimations.css';
 
 const { Header, Content } = Layout;
@@ -49,6 +51,8 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/weekly" component={Summary} />
                                         <Route path="/dashboard/month" component={MonthSummary} />
                                         <Route path="/dashboard/transections" component={Transections} />
+                                        <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
+                                        <Route path="/dashboard/reports" component={Reports} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>
