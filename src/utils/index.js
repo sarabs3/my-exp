@@ -9,3 +9,10 @@ export const concatValues = data => data.length ? parseFloat(data.reduce(
         }
     )
 ).value.amount) : 0;
+
+
+export const groupBy = (arr, fn) =>
+arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
+  acc[val] = (acc[val] || []).concat(arr[i]);
+  return acc;
+}, {});
