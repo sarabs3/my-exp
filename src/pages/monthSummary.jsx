@@ -8,11 +8,7 @@ import { compose } from "redux";
 import Stats from "../components/stats";
 import { sort } from "../utils";
 import Snapshot from "../components/snapshot";
-const filterData = data => data.length ? data.filter(item => {
-    const start = moment().startOf('month');
-    const end = moment().endOf('month');
-    return moment(item.value.date).isBetween(start, end)
-    }) : [];
+import { currentMonth } from "../services/currentMonth";
 
 const generateStats = (data) => {
     if ( data) {
@@ -47,11 +43,11 @@ const Summary = ({data, sorted = true}) => {
     if (!data) {
         return null;
     }
-    const stats = generateStats(filterData(data))
+    const stats = generateStats(currentMonth(data))
     return (
         <React.Fragment>
             <Stats title="Monthly Summary" data={stats} />
-            <Snapshot avatar={false} title="Monthly Transections" data={sort(filterData(data), sorted)} sorted/>
+            <Snapshot avatar={false} title="Monthly Transections" data={sort(currentMonth(data), sorted)} sorted/>
         </React.Fragment>
     )
 };

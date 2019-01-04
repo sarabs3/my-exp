@@ -12,6 +12,7 @@ import { Button, Divider } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import { concatValues } from "../../utils";
+import { currentMonth } from "../../services/currentMonth";
 
 const Snapshot = React.lazy(() => import('../../components/snapshot'));
 const SpentWidget = React.lazy(() => import('./components/spentWidget'));
@@ -42,8 +43,10 @@ const filterData = data => data.length ? data.filter(item => moment().isSame(ite
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
-        let notToCount = data.filter(item => !item.value.mode.includes('Credit'));
-        notToCount = concatValues(notToCount);
+        let notToCount = data.filter(item => item.value.mode ? !item.value.mode.includes('Credit') : false);
+        let Savings = data.filter(item => item.value.category ? item.value.category.includes('Savings') : false);
+        Savings = Savings.length ? concatValues(Savings).toFixed(2) : 0;
+        notToCount = notToCount.length ? concatValues(notToCount).toFixed(2) : 0;
         return [
             {
                 title: 'Transections',
@@ -55,12 +58,8 @@ const generateStats = (data, total) => {
                 amount: totalSpent
             },
             {
-                title: 'Week Average',
-                amount: (totalSpent / 7).toFixed(2)
-            },
-            {
                 title: 'Cash Exp',
-                amount: totalSpent - notToCount
+                amount: (totalSpent - notToCount).toFixed(2)
             },
             {
                 title: 'Credit Exp',
@@ -69,6 +68,14 @@ const generateStats = (data, total) => {
             {
                 title: 'Per Day Average Month',
                 amount: (total/moment().date()).toFixed(2)
+            },
+            {
+                title: 'Expected Average Month',
+                amount: ((total/moment().date()).toFixed(2))*30
+            },
+            {
+                title: 'Savings',
+                amount: Savings
             }
         ]
     } else {
@@ -82,8 +89,8 @@ class Dashboard extends React.Component {
         if (!data) {
             return null
         }
-        const filteredData = filterData(data);
-        const stats = generateStats(filteredData, concatValues(data));
+        const filteredData = currentMonth(data);
+        const stats = generateStats(filteredData, concatValues(filteredData));
         return (
             <Content>
                 <Row>
