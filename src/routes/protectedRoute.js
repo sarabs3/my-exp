@@ -8,19 +8,20 @@ import { compose } from 'redux';
 import LoaderComponent from '../components/loader';
 import Wrapper from '../components/wrapper';
 import {Motion, spring} from 'react-motion';
-import Stats from '../pages/stats/Month';
-import Form from '../pages/form';
-import Datalist from '../dataList';
-import Dashboard from '../pages/dashboard';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import Summary from '../pages/summary'
-import MonthSummary from "../pages/monthSummary";
-import Transections from '../pages/transections';
 
 import '../pageAnimations.css';
 
 const { Header, Content } = Layout;
 
+// Lazy load modules
+const Datalist = React.lazy(() => import('../dataList'));
+const Stats = React.lazy(() => import('../pages/stats/Month'));
+const Form = React.lazy(() => import('../pages/form'));
+const Summary = React.lazy(() => import('../pages/summary'));
+const MonthSummary = React.lazy( () => import("../pages/monthSummary"));
+const Transections = React.lazy(() => import('../pages/transections'));
+const Dashboard = React.lazy( () => import('../pages/dashboard'));
 const PrivateRouteComponent = props => (
     isLoaded(props.auth) ? (
         !isEmpty(props.auth) ? (
