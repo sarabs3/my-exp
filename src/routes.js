@@ -1,9 +1,11 @@
 import React from 'react';
 import { Switch, Route} from 'react-router-dom';
-import Login from './pages/auth/login';
-import Logout from './pages/auth/logout';
-import UnProtectedRoute from "./routes/unProtectedRoute";
 import PrivateRoute from "./routes/protectedRoute";
+
+// Lazy load components
+const Login = React.lazy(() => import('./pages/auth/login'));
+const Logout = React.lazy( () => import('./pages/auth/logout'));
+const UnProtectedRoute = React.lazy(() => import("./routes/unProtectedRoute"));
 
 export default (props) => (
   <Route render={({location}) => (
