@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should match snapshot 1`] = `
+<div
+  className="DateInList-dateContainer-0-1-2"
+>
+  <div
+    className="DateInList-date-0-1-1"
+  >
+    20th
+  </div>
+  <div
+    className="DateInList-month-0-1-3"
+  >
+    Feb
+  </div>
+</div>
+`;
