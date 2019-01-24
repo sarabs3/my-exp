@@ -5,7 +5,7 @@ import { List, Avatar } from 'antd';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
-import categoryIcon from '../assets/categoryIcon.svg'
+import {DateInList} from '../dateInList';
 
 const Snapshot = ({data, title, icon, type}) => (
     <Card
@@ -17,19 +17,22 @@ const Snapshot = ({data, title, icon, type}) => (
         )}
     >
         <List
-            itemLayout="horizontal"
+            itemLayout="vertical"
             dataSource={data}
             renderItem={item => {
                 const {avatar, value: {title, amount, date}} = item;
-                const formatedDate = moment(date).format('Do MMMM');
+                const day = moment(date).format('Do');
+                const month = moment(date).format(' MMM');
                 return (
-                    <List.Item>
+                    <List.Item
+                        extra={<DateInList date={day} month={month} />}
+                    >
                         <List.Item.Meta
                             avatar={
                                 icon ? <Avatar src={avatar} /> : null
                             }
                             title={title}
-                            description={type === 'today' ? amount : `Amount ${amount} | Date ${formatedDate}`}
+                            description={type === 'today' ? amount : `Amount ${amount} `}
                         />
                     </List.Item>
                 )
