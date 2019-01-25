@@ -20,21 +20,21 @@ const Snapshot = ({data, title, icon, type}) => (
             itemLayout="vertical"
             dataSource={data}
             renderItem={item => {
-                const {avatar, value: {title, amount, date}} = item;
+                const {avatar, value: {title, amount, date}, key} = item;
                 const day = moment(date).format('Do');
                 const month = moment(date).format(' MMM');
                 return (
-                    <List.Item
-                        extra={<DateInList date={day} month={month} />}
-                    >
-                        <List.Item.Meta
-                            avatar={
-                                icon ? <Avatar src={avatar} /> : null
-                            }
-                            title={title}
-                            description={type === 'today' ? amount : `Amount ${amount} `}
-                        />
-                    </List.Item>
+                        <List.Item
+                            extra={<DateInList date={day} month={month} />}
+                        >
+                            <List.Item.Meta
+                                avatar={
+                                    icon ? <Avatar src={avatar} /> : null
+                                }
+                                title={<Link to={`/dashboard/transections/${key}`}>{title}</Link>}
+                                description={type === 'today' ? amount : `Amount ${amount} `}
+                            />
+                        </List.Item>
                 )
             }}
         />

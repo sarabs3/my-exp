@@ -20,6 +20,7 @@ import Form from '../pages/form';
 import Summary from '../pages/summary';
 import MonthSummary from "../pages/monthSummary";
 import Transections from '../pages/transections';
+import TransectionsDetail from '../pages/transectionsDetails.page';
 import Dashboard from '../pages/dashboard';
 
 const { Header, Content } = Layout;
@@ -52,6 +53,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/form" component={Form} />
                                         <Route path="/dashboard/weekly" component={Summary} />
                                         <Route path="/dashboard/month" component={MonthSummary} />
+                                        <Route path="/dashboard/transections/:id" component={TransectionsDetail} />
                                         <Route path="/dashboard/transections" component={Transections} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
