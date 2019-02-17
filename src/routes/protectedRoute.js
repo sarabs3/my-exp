@@ -11,7 +11,7 @@ import {Motion, spring} from 'react-motion';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ErrorBoundary from '../components/errorBoundry';
 import Reports from '../pages/reports';
-import ReportsDetail from '../pages/reports/reportsDetail';
+import ReportsDetail from '../pages/reports/reportsDetail.container';
 import '../pageAnimations.css';
 
 
