@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import Stats from "../components/stats";
-import Snapshot from "../components/snapshot";
+import {Snapshot} from "../components/snapshot";
 import { sort, concatValues } from "../utils";
 
 const generateStats = (data, total) => {

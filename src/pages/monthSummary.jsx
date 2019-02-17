@@ -7,12 +7,12 @@ import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import Stats from "../components/stats";
 import { sort } from "../utils";
-import Snapshot from "../components/snapshot";
+import {Snapshot} from "../components/snapshot";
 import { currentMonth } from "../services/currentMonth";
 
 const generateStats = (data) => {
     if ( data) {
-        const totalSpent = data.length ? data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b) : 0;
+        const totalSpent =  data.length && data.map(item => parseInt(item.value.amount)).reduce((a,b) => a+b);
         return [{
             title: 'Transections',
             amount: data.length,

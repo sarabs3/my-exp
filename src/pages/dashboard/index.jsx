@@ -14,9 +14,9 @@ import moment from 'moment';
 import { concatValues } from "../../utils";
 import { currentMonth } from "../../services/currentMonth";
 
-const Snapshot = React.lazy(() => import('../../components/snapshot'));
-const SpentWidget = React.lazy(() => import('./components/spentWidget'));
-const Stats = React.lazy(() => import('../../components/stats'));
+import {Snapshot} from '../../components/snapshot';
+import SpentWidget from './components/spentWidget';
+import Stats from '../../components/stats';
 
 const {Content} = Layout;
 

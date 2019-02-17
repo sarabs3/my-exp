@@ -14,16 +14,20 @@ import Reports from '../pages/reports';
 import ReportsDetail from '../pages/reports/reportsDetail';
 import '../pageAnimations.css';
 
-const { Header, Content } = Layout;
 
 // Lazy load modules
-const Datalist = React.lazy(() => import('../dataList'));
-const Stats = React.lazy(() => import('../pages/stats/Month'));
-const Form = React.lazy(() => import('../pages/form'));
-const Summary = React.lazy(() => import('../pages/summary'));
-const MonthSummary = React.lazy( () => import("../pages/monthSummary"));
-const Transections = React.lazy(() => import('../pages/transections'));
-const Dashboard = React.lazy( () => import('../pages/dashboard'));
+import Datalist from '../dataList';
+import Stats from '../pages/stats/Month';
+import Form from '../pages/form';
+import Summary from '../pages/summary';
+import MonthSummary from "../pages/monthSummary";
+import Transections from '../pages/transections';
+import TransectionsDetail from '../pages/transectionsDetails.page';
+import Dashboard from '../pages/dashboard';
+
+const { Header, Content } = Layout;
+
+
 const PrivateRouteComponent = props => (
     isLoaded(props.auth) ? (
         !isEmpty(props.auth) ? (
@@ -51,6 +55,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/form" component={Form} />
                                         <Route path="/dashboard/weekly" component={Summary} />
                                         <Route path="/dashboard/month" component={MonthSummary} />
+                                        <Route path="/dashboard/transections/:id" component={TransectionsDetail} />
                                         <Route path="/dashboard/transections" component={Transections} />
                                         <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
                                         <Route path="/dashboard/reports" component={Reports} />
