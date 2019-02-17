@@ -19,6 +19,7 @@ import '../pageAnimations.css';
 import Datalist from '../dataList';
 import Stats from '../pages/stats/Month';
 import Form from '../pages/form';
+import AddIncome from "../pages/addIncome";
 import Summary from '../pages/summary';
 import MonthSummary from "../pages/monthSummary";
 import Transections from '../pages/transections';
@@ -59,6 +60,8 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/transections" component={Transections} />
                                         <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
                                         <Route path="/dashboard/reports" component={Reports} />
+                                        <Route path="/dashboard/add/" component={AddIncome} />
+                                        <Route path="/dashboard/add/income" component={AddIncome} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>
