@@ -21,6 +21,8 @@ const {Content} = Layout;
 
 
 const filterData = data => data.length ? data.filter(item => moment().isSame(item.value.date, 'day')) : [];
+const income = data => data.length && data.reduce((a,b) => ({value: {amount: parseFloat(a.value.amount)+parseFloat(b.value.amount)}})).value.amount;
+
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
@@ -69,7 +71,11 @@ class Dashboard extends React.Component {
         historyFlag: false,
     }
     render() {
-        const {Categories = [], paymentMode = [], data} = this.props;
+        const {Categories = [], paymentMode = [], data } = this.props;
+        let totalIncome = 0;
+        if (this.props.income) {
+            totalIncome = income(this.props.income);
+        }
         const { WeeklySnapshotFlag, historyFlag } = this.state;
         if (!data) {
             return null
@@ -79,11 +85,13 @@ class Dashboard extends React.Component {
         return (
             <Content>
                 <Row>
+                {totalIncome}
                     <Media query="(max-width: 900px)">
                         {matches => matches ? (
                             <Col span={24}>
                                 <Row>
                                     <Col span={24}>
+                                        {totalIncome}
                                         <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
                                             <Stats
                                                 title="Recent Stats"
@@ -159,6 +167,10 @@ const DashboardEnhancer =  compose(
                 {
                     path: `data/${props.uid}`,
                     storeAs: 'data'
+                },
+                {
+                    path: `income/${props.uid}`,
+                    storeAs: 'income'
                 }
             ]
         )
@@ -168,6 +180,7 @@ const DashboardEnhancer =  compose(
             Categories: firebase.ordered.Categories,
             paymentMode: firebase.ordered.paymentMode,
             data: firebase.ordered.data,
+            income: firebase.ordered.income,
         }
     ))
 )(Dashboard);
