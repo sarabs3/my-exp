@@ -36,11 +36,22 @@ class Form extends React.Component {
   }
 };
 
-export default compose(
-  firebaseConnect(['Categories', 'paymentMode']),
+const FormEnhancer = compose(
+  firebaseConnect((props) => (
+    [
+      'Categories',
+      {
+        path: `accounts/${props.uid}/`,
+        storeAs: 'paymentMode',
+      }
+    ]
+  )),
   connect(({firebase}) => ({
     categories: firebase.ordered.Categories,
     paymentMode: firebase.ordered.paymentMode,
     uid: firebase.auth.uid,
 })))(Form);
 
+export default connect(({firebase}) => ({
+  uid: firebase.auth.uid
+}))(FormEnhancer);

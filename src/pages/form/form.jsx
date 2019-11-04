@@ -131,10 +131,10 @@ class SimpleForm extends React.Component {
                                         paymentMode && paymentMode.map(
                                             item => (
                                                 <Option
-                                                    value={item.value}
+                                                    value={item.value.name}
                                                     key={item.key}
                                                 >
-                                                    {item.value}
+                                                    {item.value.name} ({item.value.balance})
                                                 </Option>
                                             )
                                         )
