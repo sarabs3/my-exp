@@ -50,7 +50,11 @@ class SimpleForm extends React.Component {
             e.calculate = true;
         }
         this.props.reset()
+        if (e.category === 'Savings') {
+            this.props.handleSubmit(true)
+        } else {
         this.props.handleSubmit()
+        }
     }
     render() {
         const {

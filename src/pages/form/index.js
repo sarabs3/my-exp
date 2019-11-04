@@ -10,9 +10,14 @@ class Form extends React.Component {
   state = {
     formSubmit: false
   }
-  handleSubmit = (values) => {
+  handleSubmit = (values, savings) => {
     const {uid} = this.props;
     this.props.firebase.push(`data/${uid}/`,values)
+    .then(() => this.setState(()=>({formSubmit:true})));
+  }
+  handleSavings = (values) => {
+    const {uid} = this.props;
+    this.props.firebase.push(`savings/${uid}/`,values)
     .then(() => this.setState(()=>({formSubmit:true})));
   }
   render () {
@@ -23,6 +28,7 @@ class Form extends React.Component {
     return (
       <AddForm
         onSubmit={this.handleSubmit}
+        handleSavings={this.handleSavings}
         categories={this.props.categories}
         paymentMode={this.props.paymentMode}
       />

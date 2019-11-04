@@ -1,14 +1,14 @@
 export const sort = (data, sort) => {console.log('sort', sort);return sort ? data.reverse() : data;}
 
-export const concatValues = data => data.length ? parseFloat(data.reduce(
-    (a,b) => (
-        {
-            value: {
-                amount: parseFloat(a.value.amount) + parseFloat(b.value.amount)
-            }
-        }
-    )
-).value.amount) : 0;
+export const concatValues = data => {
+    if (data.length) {
+        return data
+        .map(item => parseFloat(item.value.amount))
+        .filter(Boolean)
+        .reduce((a,b) => a+b)        ;
+    }
+    return 0;
+};
 
 
 export const groupBy = (arr, fn) =>
