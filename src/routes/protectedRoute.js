@@ -25,6 +25,7 @@ import MonthSummary from "../pages/monthSummary";
 import Transections from '../pages/transections';
 import TransectionsDetail from '../pages/transectionsDetails.page';
 import Dashboard from '../pages/dashboard';
+import Accounts from '../pages/Accounts';
 
 const { Header, Content } = Layout;
 
@@ -62,7 +63,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/reports" component={Reports} />
                                         <Route path="/dashboard/add/" component={AddIncome} />
                                         <Route path="/dashboard/add/income" component={AddIncome} />
-                                        <Route path="/dashboard/accounts" component={() => <p>Accounts</p>} />
+                                        <Route path="/dashboard/accounts" component={Accounts} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>
