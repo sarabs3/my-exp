@@ -62,6 +62,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/reports" component={Reports} />
                                         <Route path="/dashboard/add/" component={AddIncome} />
                                         <Route path="/dashboard/add/income" component={AddIncome} />
+                                        <Route path="/dashboard/accounts" component={() => <p>Accounts</p>} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>

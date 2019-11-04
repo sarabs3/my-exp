@@ -25,6 +25,7 @@ class Navigation extends React.Component {
                         <Menu.Item><Link to='/dashboard'>Home</Link></Menu.Item>
                         <Menu.Item><Link to='/dashboard/form'>Add</Link></Menu.Item>
                         <Menu.Item><Link to='/dashboard/list'>List</Link></Menu.Item>
+                        <Menu.Item><Link to='/dashboard/accounts'>Accounts</Link></Menu.Item>
                         <Menu.Item><Link to='/dashboard/stats'>Stats</Link></Menu.Item>
                         <Menu.Item><Link to="/dashboard/reports">Reports</Link></Menu.Item>
                         <Menu.Item><Button><Link to='/logout'>Logout</Link></Button></Menu.Item>
