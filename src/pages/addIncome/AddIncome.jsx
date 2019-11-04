@@ -13,7 +13,7 @@ import {
     Button,
     Divider
 } from 'antd';
-import './form.css';
+import './addIncome.css';
 import DatePickerInput, {
     InputWrap,
     SelectWrap
@@ -25,7 +25,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
 
-class SimpleForm extends React.Component {
+class AddIncome extends React.Component {
     constructor () {
     super()
     this.state = {
@@ -50,11 +50,7 @@ class SimpleForm extends React.Component {
             e.calculate = true;
         }
         this.props.reset()
-        if (e.category === 'Savings') {
-            this.props.handleSubmit(true)
-        } else {
         this.props.handleSubmit()
-        }
     }
     render() {
         const {
@@ -70,7 +66,7 @@ class SimpleForm extends React.Component {
                 <Row type="flex" justify='center'>
                     <Col span={22}>
                         <Divider />
-                        <h1>Log Entry</h1>
+                        <h1>Add Income</h1>
                         <Divider />
                         <Form onSubmit={handleSubmit(this.handleSubmit)}>
                             <FormItem>
@@ -131,10 +127,10 @@ class SimpleForm extends React.Component {
                                         paymentMode && paymentMode.map(
                                             item => (
                                                 <Option
-                                                    value={item.value.name}
+                                                    value={item.value}
                                                     key={item.key}
                                                 >
-                                                    {item.value.name} ({item.value.balance})
+                                                    {item.value}
                                                 </Option>
                                             )
                                         )
@@ -186,5 +182,5 @@ class SimpleForm extends React.Component {
 };
 
 export default reduxForm({
-    form: 'addEntry',
-})(SimpleForm)
+    form: 'addIncome',
+})(AddIncome)

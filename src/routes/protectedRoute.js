@@ -10,6 +10,8 @@ import Wrapper from '../components/wrapper';
 import {Motion, spring} from 'react-motion';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ErrorBoundary from '../components/errorBoundry';
+import Reports from '../pages/reports';
+import ReportsDetail from '../pages/reports/reportsDetail.container';
 import '../pageAnimations.css';
 
 
@@ -17,11 +19,13 @@ import '../pageAnimations.css';
 import Datalist from '../dataList';
 import Stats from '../pages/stats/Month';
 import Form from '../pages/form';
+import AddIncome from "../pages/addIncome";
 import Summary from '../pages/summary';
 import MonthSummary from "../pages/monthSummary";
 import Transections from '../pages/transections';
 import TransectionsDetail from '../pages/transectionsDetails.page';
 import Dashboard from '../pages/dashboard';
+import Accounts from '../pages/Accounts';
 
 const { Header, Content } = Layout;
 
@@ -55,6 +59,11 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/month" component={MonthSummary} />
                                         <Route path="/dashboard/transections/:id" component={TransectionsDetail} />
                                         <Route path="/dashboard/transections" component={Transections} />
+                                        <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
+                                        <Route path="/dashboard/reports" component={Reports} />
+                                        <Route path="/dashboard/add/" component={AddIncome} />
+                                        <Route path="/dashboard/add/income" component={AddIncome} />
+                                        <Route path="/dashboard/accounts" component={Accounts} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>

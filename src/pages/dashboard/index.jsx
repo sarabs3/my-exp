@@ -15,31 +15,14 @@ import { concatValues } from "../../utils";
 import { currentMonth } from "../../services/currentMonth";
 
 import {Snapshot} from '../../components/snapshot';
-import SpentWidget from './components/spentWidget';
 import Stats from '../../components/stats';
-
+import { LeftBar } from '../../components/LeftBar'
 const {Content} = Layout;
 
-const Leftbar = (props) => (
-    <Row>
-        <Col span={24}>
-            <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                <Snapshot
-                    title='Today Snapshot'
-                    type='today'
-                    data={props.data ? filterData(props.data) : []}
-                    icon
-                />
-            </React.Suspense>
-        </Col>
-        <Col span={24}>
-            <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                <SpentWidget categories={props.Categories} />
-            </React.Suspense>
-        </Col>
-    </Row>
-)
+
 const filterData = data => data.length ? data.filter(item => moment().isSame(item.value.date, 'day')) : [];
+const income = data => data.length && data.reduce((a,b) => ({value: {amount: parseFloat(a.value.amount)+parseFloat(b.value.amount)}})).value.amount;
+
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
@@ -83,9 +66,17 @@ const generateStats = (data, total) => {
     }
 }
 class Dashboard extends React.Component {
-
+    state = {
+        WeeklySnapshotFlag: false,
+        historyFlag: false,
+    }
     render() {
-        const {Categories = [], paymentMode = [], data} = this.props;
+        const {Categories = [], paymentMode = [], data } = this.props;
+        let totalIncome = 0;
+        if (this.props.income) {
+            totalIncome = income(this.props.income);
+        }
+        const { WeeklySnapshotFlag, historyFlag } = this.state;
         if (!data) {
             return null
         }
@@ -94,11 +85,13 @@ class Dashboard extends React.Component {
         return (
             <Content>
                 <Row>
+                {totalIncome}
                     <Media query="(max-width: 900px)">
                         {matches => matches ? (
                             <Col span={24}>
                                 <Row>
                                     <Col span={24}>
+                                        {totalIncome}
                                         <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
                                             <Stats
                                                 title="Recent Stats"
@@ -129,7 +122,7 @@ class Dashboard extends React.Component {
                             </Col>
                     ) : (
                             <Col span={6}>
-                                <Leftbar data={data} Categories={Categories} />
+                                <LeftBar data={data} Categories={Categories} />
                             </Col>
                     )}
                     </Media>
@@ -138,20 +131,20 @@ class Dashboard extends React.Component {
                             matches => matches ? (
                                 <Fragment>
                                     <Col span={12}>
-                                        <WeeklySnapshot />
+                                        {WeeklySnapshotFlag && <WeeklySnapshot />}
                                         <Row>
                                             <Col span={12}>
-                                                <HistoryWidget />
+                                                {historyFlag && <HistoryWidget />}
                                             </Col>
                                         </Row>
                                     </Col>
                                     <Col span={6}>
                                         <Row>
                                             <Col span={24}>
-                                                <PredictionWidget />
+                                                {historyFlag && <PredictionWidget />}
                                             </Col>
                                             <Col span={24}>
-                                                <PaymentMethodWidget paymentMode={paymentMode} />
+                                                {historyFlag && <PaymentMethodWidget paymentMode={paymentMode} />}
                                             </Col>
                                         </Row>
                                     </Col>
@@ -174,6 +167,10 @@ const DashboardEnhancer =  compose(
                 {
                     path: `data/${props.uid}`,
                     storeAs: 'data'
+                },
+                {
+                    path: `income/${props.uid}`,
+                    storeAs: 'income'
                 }
             ]
         )
@@ -183,6 +180,7 @@ const DashboardEnhancer =  compose(
             Categories: firebase.ordered.Categories,
             paymentMode: firebase.ordered.paymentMode,
             data: firebase.ordered.data,
+            income: firebase.ordered.income,
         }
     ))
 )(Dashboard);

@@ -25,7 +25,8 @@
     "redux-form": "^7.4.2",
     "redux-form-website-template": "0.0.41",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2",
+    "typy": "^3.0.1"
   },
   "devDependencies": {
     "firebase-tools": "^6.2.2",

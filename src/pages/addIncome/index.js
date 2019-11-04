@@ -4,20 +4,15 @@ import {compose} from 'redux'
 import {firebaseConnect} from 'react-redux-firebase'
 import { Redirect } from "react-router-dom";
 
-import AddForm from './form';
+import AddForm from './AddIncome';
 
-class Form extends React.Component {
+class Income extends React.Component {
   state = {
     formSubmit: false
   }
-  handleSubmit = (values, savings) => {
+  handleSubmit = (values) => {
     const {uid} = this.props;
-    this.props.firebase.push(`data/${uid}/`,values)
-    .then(() => this.setState(()=>({formSubmit:true})));
-  }
-  handleSavings = (values) => {
-    const {uid} = this.props;
-    this.props.firebase.push(`savings/${uid}/`,values)
+    this.props.firebase.push(`income/${uid}/`,values)
     .then(() => this.setState(()=>({formSubmit:true})));
   }
   render () {
@@ -28,7 +23,6 @@ class Form extends React.Component {
     return (
       <AddForm
         onSubmit={this.handleSubmit}
-        handleSavings={this.handleSavings}
         categories={this.props.categories}
         paymentMode={this.props.paymentMode}
       />
@@ -36,22 +30,11 @@ class Form extends React.Component {
   }
 };
 
-const FormEnhancer = compose(
-  firebaseConnect((props) => (
-    [
-      'Categories',
-      {
-        path: `accounts/${props.uid}/`,
-        storeAs: 'paymentMode',
-      }
-    ]
-  )),
+export default compose(
+  firebaseConnect(['Categories', 'paymentMode']),
   connect(({firebase}) => ({
     categories: firebase.ordered.Categories,
     paymentMode: firebase.ordered.paymentMode,
     uid: firebase.auth.uid,
-})))(Form);
+})))(Income);
 
-export default connect(({firebase}) => ({
-  uid: firebase.auth.uid
-}))(FormEnhancer);
