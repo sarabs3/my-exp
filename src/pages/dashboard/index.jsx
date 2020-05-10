@@ -1,13 +1,8 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import {Layout,  Row, Col} from 'antd'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
-import {firebaseConnect, getVal } from 'react-redux-firebase'
-import HistoryWidget from './components/historyWidget';
-import PredictionWidget from './components/predictionWidget';
-import PaymentMethodWidget from './components/paymentMethodWidget';
-import WeeklySnapshot from './components/weeklySnapshot';
-import Media from "react-media";
+import {firebaseConnect } from 'react-redux-firebase'
 import { Button, Divider } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
@@ -16,7 +11,6 @@ import { currentMonth } from "../../services/currentMonth";
 
 import {Snapshot} from '../../components/snapshot';
 import Stats from '../../components/stats';
-import { LeftBar } from '../../components/LeftBar'
 const {Content} = Layout;
 
 
@@ -86,72 +80,38 @@ class Dashboard extends React.Component {
             <Content>
                 <Row>
                 {totalIncome}
-                    <Media query="(max-width: 900px)">
-                        {matches => matches ? (
+                    <Col span={24}>
+                        <Row>
                             <Col span={24}>
-                                <Row>
-                                    <Col span={24}>
-                                        {totalIncome}
-                                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                            <Stats
-                                                title="Recent Stats"
-                                                data={stats}
-                                                component={
-                                                    <Button onClick={this.prevWeek}>Previous Week</Button>
-                                                }
-                                            />
-                                        </React.Suspense>
-                                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                            <Snapshot
-                                                title='Today Transections'
-                                                type='today'
-                                                data={data ? filterData(data) : []}
-                                            />
-                                        </React.Suspense>
-                                    </Col>
-                                    <Col span={24}>
-                                        <Button type="primary" block size="large">
-                                            <Link to="/dashboard/weekly">Weekly Summary</Link>
-                                        </Button>
-                                        <Divider />
-                                        <Button type="primary" block size="large">
-                                            <Link to="/dashboard/month">Month Summary</Link>
-                                        </Button>
-                                    </Col>
-                                </Row>
+                                {totalIncome}
+                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                                    <Stats
+                                        title="Recent Stats"
+                                        data={stats}
+                                        component={
+                                            <Button onClick={this.prevWeek}>Previous Week</Button>
+                                        }
+                                    />
+                                </React.Suspense>
+                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                                    <Snapshot
+                                        title='Today Transections'
+                                        type='today'
+                                        data={data ? filterData(data) : []}
+                                    />
+                                </React.Suspense>
                             </Col>
-                    ) : (
-                            <Col span={6}>
-                                <LeftBar data={data} Categories={Categories} />
+                            <Col span={24}>
+                                <Button type="primary" block size="large">
+                                    <Link to="/dashboard/weekly">Weekly Summary</Link>
+                                </Button>
+                                <Divider />
+                                <Button type="primary" block size="large">
+                                    <Link to="/dashboard/month">Month Summary</Link>
+                                </Button>
                             </Col>
-                    )}
-                    </Media>
-                    <Media query="(min-width: 900px)">
-                        {
-                            matches => matches ? (
-                                <Fragment>
-                                    <Col span={12}>
-                                        {WeeklySnapshotFlag && <WeeklySnapshot />}
-                                        <Row>
-                                            <Col span={12}>
-                                                {historyFlag && <HistoryWidget />}
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                    <Col span={6}>
-                                        <Row>
-                                            <Col span={24}>
-                                                {historyFlag && <PredictionWidget />}
-                                            </Col>
-                                            <Col span={24}>
-                                                {historyFlag && <PaymentMethodWidget paymentMode={paymentMode} />}
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Fragment>
-                            )    : null
-                        }
-                    </Media>
+                        </Row>
+                    </Col>
                 </Row>
             </Content>
         )
