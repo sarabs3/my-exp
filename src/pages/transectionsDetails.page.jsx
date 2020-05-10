@@ -5,12 +5,27 @@ import { compose } from "redux";
 import { firebaseConnect } from "react-redux-firebase";
 import PropTypes from 'prop-types';
 import t from "typy";
+import EditTwoTone from "@ant-design/icons/lib/icons/EditTwoTone";
+import DeleteTwoTone from "@ant-design/icons/lib/icons/DeleteTwoTone";
+import confirm from "antd/es/modal/confirm";
 
-const TransectionsDetails = ({data, title}) => (
+const TransectionsDetails = ({data, title, history, firebase, uid, match: { params } }) => (
     data ? (
         <Card
             title={title}
+            actions={[
+                    <EditTwoTone onClick={() => history.push('/dashboard/form/')} />,
+                    <DeleteTwoTone onClick={() => confirm({
+                        title: 'Are you sure to delete?',
+                        onOk: () => {
+                            firebase.ref(`data/${uid}/${params.id}`).remove();
+                            history.goBack();
+                        },
+                    })} />
+                ]
+            }
         >
+
         {data.map(({key, value}) => <p key={key}> {key}: <b>{value}</b></p>)}
         </Card>
     ) : null
