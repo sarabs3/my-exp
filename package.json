@@ -7,6 +7,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "antd": "^3.9.3",
+    "bit-bin": "^14.4.3",
     "firebase": "^5.5.0",
     "moment": "^2.22.2",
     "react": "^16.13.1",
@@ -41,5 +42,13 @@
     "eject": "react-scripts eject",
     "deploy": "./node_modules/.bin/firebase deploy",
     "login": "./node_modules/.bin/firebase login"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/compilers/react@1.0.4",
+      "tester": "bit.envs/testers/jest@22.4.3"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
