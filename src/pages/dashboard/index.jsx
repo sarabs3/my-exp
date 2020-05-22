@@ -81,57 +81,57 @@ class Dashboard extends React.Component {
         const stats = generateStats(filteredData, concatValues(filteredData));
         return (
             <Content>
-                        <Row>
-                            <Col className="gutter-row" span={8}>
-                                <Tile>
-                                    <h4>Total Spend in May</h4>
-                                    <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                        <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
-                                        <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
-                                    </div>
-                                </Tile>
-                            </Col>
-                            <Col className="gutter-row" span={8}>
-                                <Tile>
-                                    <h4>Total Income in May</h4>
-                                    <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                        <h5>{totalIncome}</h5>
-                                        <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
-                                    </div>
-                                </Tile>
-                            </Col>
-                            <Col className="gutter-row" span={8}>
-                                <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
-                                <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <span className="fa fa-arrow" /></LargeButton>
-                            </Col>
-                            <Col span={24}>
-                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                    <Stats
-                                        title="Recent Stats"
-                                        data={stats}
-                                        component={
-                                            <Button onClick={this.prevWeek}>Previous Week</Button>
-                                        }
-                                    />
-                                </React.Suspense>
-                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                    <Snapshot
-                                        title='Today Transections'
-                                        type='today'
-                                        data={data ? filterData(data) : []}
-                                    />
-                                </React.Suspense>
-                            </Col>
-                            <Col span={24}>
-                                <Button type="primary" block size="large">
-                                    <Link to="/dashboard/weekly">Weekly Summary</Link>
-                                </Button>
-                                <Divider />
-                                <Button type="primary" block size="large">
-                                    <Link to="/dashboard/month">Month Summary</Link>
-                                </Button>
-                            </Col>
-                        </Row>
+                <Row>
+                    <Col className="gutter-row" span={8}>
+                        <Tile>
+                            <h4>Total Spend in May</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
+                                <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <Tile>
+                            <h4>Total Income in May</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5>{totalIncome}</h5>
+                                <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
+                        <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <span className="fa fa-arrow" /></LargeButton>
+                    </Col>
+                    <Col span={24}>
+                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                            <Stats
+                                title="Recent Stats"
+                                data={stats}
+                                component={
+                                    <Button onClick={this.prevWeek}>Previous Week</Button>
+                                }
+                            />
+                        </React.Suspense>
+                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                            <Snapshot
+                                title='Today Transections'
+                                type='today'
+                                data={data ? filterData(data) : []}
+                            />
+                        </React.Suspense>
+                    </Col>
+                    <Col span={24}>
+                        <Button type="primary" block size="large">
+                            <Link to="/dashboard/weekly">Weekly Summary</Link>
+                        </Button>
+                        <Divider />
+                        <Button type="primary" block size="large">
+                            <Link to="/dashboard/month">Month Summary</Link>
+                        </Button>
+                    </Col>
+                </Row>
             </Content>
         )
     }
