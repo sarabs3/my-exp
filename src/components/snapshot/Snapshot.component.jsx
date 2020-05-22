@@ -31,7 +31,7 @@ const Snapshot = ({data, title, icon, type}) => (
                                 avatar={
                                     icon ? <Avatar src={avatar} /> : null
                                 }
-                                title={<Link to={`/dashboard/transections/${key}`}>{title}</Link>}
+                                title={<Link to={`/dashboard/transactions/${key}`}>{title}</Link>}
                                 description={type === 'today' ? amount : `Amount ${amount} `}
                             />
                         </List.Item>

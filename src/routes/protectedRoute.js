@@ -22,8 +22,9 @@ import Form from '../pages/form';
 import AddIncome from "../pages/addIncome";
 import Summary from '../pages/summary';
 import MonthSummary from "../pages/monthSummary";
-import Transections from '../pages/transections';
-import TransectionsDetail from '../pages/transectionsDetails.page';
+import MonthIncomeSummary from '../pages/MonthlyIncomeSummary';
+import Transactions from '../pages/transections';
+import TransactionsDetail from '../pages/transectionsDetails.page';
 import Dashboard from '../pages/dashboard';
 import Accounts from '../pages/Accounts';
 
@@ -57,13 +58,15 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/form" component={Form} />
                                         <Route path="/dashboard/weekly" component={Summary} />
                                         <Route path="/dashboard/month" component={MonthSummary} />
-                                        <Route path="/dashboard/transections/:id" component={TransectionsDetail} />
-                                        <Route path="/dashboard/transections" component={Transections} />
+                                        <Route path="/dashboard/income/month" component={MonthIncomeSummary} />
+                                        <Route path="/dashboard/transactions/:id" component={TransactionsDetail} />
+                                        <Route path="/dashboard/transactions" component={Transactions} />
                                         <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
                                         <Route path="/dashboard/reports" component={Reports} />
                                         <Route path="/dashboard/add/" component={AddIncome} />
                                         <Route path="/dashboard/add/income" component={AddIncome} />
                                         <Route path="/dashboard/accounts" component={Accounts} />
+                                        <Route path="/dashboard/income/add" component={AddIncome} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>

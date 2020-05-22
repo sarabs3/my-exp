@@ -14,9 +14,9 @@ const Transections = (data, total) => {
         notToCount = concatValues(notToCount);
         return [
             {
-                title: 'Transections',
+                title: 'Transactions',
                 amount: data.length,
-                actions: <Link to='/dashboard/transections'>View All</Link>
+                actions: <Link to='/dashboard/transactions'>View All</Link>
             },
             {
                 title: 'Total Spent',

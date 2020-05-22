@@ -1,0 +1,11 @@
+.loginPage {
+    background: #F9B933;
+    height: 100vh;
+    margin-top: -64px;
+    padding-top: 64px;
+}
+.loginPage .loginPage__login-form{
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}

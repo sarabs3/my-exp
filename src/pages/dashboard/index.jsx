@@ -6,11 +6,15 @@ import {firebaseConnect } from 'react-redux-firebase'
 import { Button, Divider } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { concatValues } from "../../utils";
 import { currentMonth } from "../../services/currentMonth";
 
 import {Snapshot} from '../../components/snapshot';
 import Stats from '../../components/stats';
+import Tile from "../../components/Tile/Tile";
+import LargeButton from '../../components/Button/Button';
 const {Content} = Layout;
 
 
@@ -28,11 +32,11 @@ const generateStats = (data, total) => {
             {
                 title: 'Transections',
                 amount: data.length,
-                actions: <Link to='/dashboard/transections'>View All</Link>
+                actions: <Link to='/dashboard/transactions'>View All</Link>
             },
             {
                 title: 'Total Spent',
-                amount: totalSpent
+                amount: totalSpent.toFixed(2)
             },
             {
                 title: 'Cash Exp',
@@ -58,59 +62,71 @@ const generateStats = (data, total) => {
     } else {
         return []
     }
-}
+};
 class Dashboard extends React.Component {
     state = {
         WeeklySnapshotFlag: false,
         historyFlag: false,
-    }
+    };
     render() {
-        const {Categories = [], paymentMode = [], data } = this.props;
-        let totalIncome = 0;
-        if (this.props.income) {
-            totalIncome = income(this.props.income);
-        }
-        const { WeeklySnapshotFlag, historyFlag } = this.state;
-        if (!data) {
+        const {data, history } = this.props;
+        if (!data || !this.props.income) {
             return null
         }
         const filteredData = currentMonth(data);
+        const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
         return (
             <Content>
                 <Row>
-                {totalIncome}
+                    <Col className="gutter-row" span={8}>
+                        <Tile>
+                            <h4>Total Spend in {moment().format('MMMM')}</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
+                                <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <Tile>
+                            <h4>Total Income in {moment().format('MMMM')}</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalIncome}</h5>
+                                <h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
+                        <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
+                    </Col>
                     <Col span={24}>
-                        <Row>
-                            <Col span={24}>
-                                {totalIncome}
-                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                    <Stats
-                                        title="Recent Stats"
-                                        data={stats}
-                                        component={
-                                            <Button onClick={this.prevWeek}>Previous Week</Button>
-                                        }
-                                    />
-                                </React.Suspense>
-                                <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
-                                    <Snapshot
-                                        title='Today Transections'
-                                        type='today'
-                                        data={data ? filterData(data) : []}
-                                    />
-                                </React.Suspense>
-                            </Col>
-                            <Col span={24}>
-                                <Button type="primary" block size="large">
-                                    <Link to="/dashboard/weekly">Weekly Summary</Link>
-                                </Button>
-                                <Divider />
-                                <Button type="primary" block size="large">
-                                    <Link to="/dashboard/month">Month Summary</Link>
-                                </Button>
-                            </Col>
-                        </Row>
+                        <React.Suspense fallback={<p>waiting for lazy components...</p>}>
+                            <Stats
+                                title="Recent Stats"
+                                data={stats}
+                                component={
+                                    <Button onClick={this.prevWeek}>Previous Week</Button>
+                                }
+                            />
+                        </React.Suspense>
+                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                            <Snapshot
+                                title='Today Transections'
+                                type='today'
+                                data={data ? filterData(data) : []}
+                            />
+                        </React.Suspense>
+                    </Col>
+                    <Col span={24}>
+                        <Button type="primary" block size="large">
+                            <Link to="/dashboard/weekly">Weekly Summary</Link>
+                        </Button>
+                        <Divider />
+                        <Button type="primary" block size="large">
+                            <Link to="/dashboard/month">Month Summary</Link>
+                        </Button>
                     </Col>
                 </Row>
             </Content>
