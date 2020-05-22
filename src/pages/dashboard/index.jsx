@@ -32,7 +32,7 @@ const generateStats = (data, total) => {
             {
                 title: 'Transections',
                 amount: data.length,
-                actions: <Link to='/dashboard/transections'>View All</Link>
+                actions: <Link to='/dashboard/transactions'>View All</Link>
             },
             {
                 title: 'Total Spent',
@@ -70,42 +70,39 @@ class Dashboard extends React.Component {
     };
     render() {
         const {data, history } = this.props;
-        let totalIncome = 0;
-        if (this.props.income) {
-            totalIncome = income(this.props.income);
-        }
-        if (!data) {
+        if (!data || !this.props.income) {
             return null
         }
         const filteredData = currentMonth(data);
+        const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
         return (
             <Content>
                 <Row>
                     <Col className="gutter-row" span={8}>
                         <Tile>
-                            <h4>Total Spend in May</h4>
+                            <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                                 <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
-                                <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
+                                <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
                     <Col className="gutter-row" span={8}>
                         <Tile>
-                            <h4>Total Income in May</h4>
+                            <h4>Total Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5>{totalIncome}</h5>
-                                <h5><span className="fas fa-arrow-right" /> &nbsp;</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalIncome}</h5>
+                                <h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
                     <Col className="gutter-row" span={8}>
                         <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
-                        <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <span className="fa fa-arrow" /></LargeButton>
+                        <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
                     </Col>
                     <Col span={24}>
-                        <React.Suspense fallback={<p>waiting for lazy componenets...</p>}>
+                        <React.Suspense fallback={<p>waiting for lazy components...</p>}>
                             <Stats
                                 title="Recent Stats"
                                 data={stats}
