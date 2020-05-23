@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
         return (
             <Content>
                 <Row>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
                         <Tile>
                             <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
                             </div>
                         </Tile>
                     </Col>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
                         <Tile>
                             <h4>Total Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
@@ -97,9 +97,36 @@ class Dashboard extends React.Component {
                             </div>
                         </Tile>
                     </Col>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
                         <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
                         <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
+                    </Col>
+                    <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
+                        <Tile>
+                            <h4>Savings in {moment().format('MMMM')}</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[6].amount}</h5>
+                                {/*<h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
+                        <Tile>
+                            <h4>Accounts Balance </h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
+                                {/*<h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                            </div>
+                        </Tile>
+                    </Col>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
+                        <Tile customStyle={{ background: '#FAAF31' }}>
+                            <h4>Liabilities & Loans</h4>
+                            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
+                                {/*<h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                            </div>
+                        </Tile>
                     </Col>
                     <Col span={24}>
                         <React.Suspense fallback={<p>waiting for lazy components...</p>}>
