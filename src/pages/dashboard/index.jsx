@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
         return (
             <Content>
                 <Row>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
                         <Tile>
                             <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
                             </div>
                         </Tile>
                     </Col>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
                         <Tile>
                             <h4>Total Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
@@ -97,7 +97,7 @@ class Dashboard extends React.Component {
                             </div>
                         </Tile>
                     </Col>
-                    <Col className="gutter-row" span={8}>
+                    <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
                         <LargeButton onClick={() => history.push('/dashboard/form')}>Add Expense <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
                         <LargeButton onClick={() => history.push('/dashboard/income/add')}>Add income <FontAwesomeIcon icon={faArrowRight} /></LargeButton>
                     </Col>
