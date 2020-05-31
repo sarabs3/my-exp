@@ -70,16 +70,17 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
+        console.log('uid', this.props.uid);
         const {data, history, savings, loans } = this.props;
-        if (!data || !this.props.income || !savings || !loans) {
-            return null
+        if (!data) {
+            return null;
         }
-        const thisMonthSaving = currentMonth(savings);
-        const totalLoans = loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
+        const thisMonthSaving = savings ? currentMonth(savings) : [];
+        const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
         const filteredData = currentMonth(data);
         const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
-        const totalSavings = thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
+        const totalSavings = thisMonthSaving.length > 0  ? thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
         return (
             <Content>
                 <Row>
@@ -87,7 +88,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(stats[1].amount)}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(stats[1] && stats[1].amount)}</h5>
                                 <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -164,6 +165,13 @@ class Dashboard extends React.Component {
         )
     }
 }
+
+Dashboard.defaultProps = {
+    history: {},
+    savings: [],
+    loans: [],
+    income: []
+};
 
 const DashboardEnhancer =  compose(
     firebaseConnect(

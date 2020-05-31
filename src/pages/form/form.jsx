@@ -54,6 +54,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                                     <DatePicker
                                         autoOk
                                         defaultValue={moment()}
+                                        onChange={(e) => setFieldValue('date', e)}
                                     />
                                 </div>
                                 {!values.expense && <div style={{ marginBottom: 20 }}>

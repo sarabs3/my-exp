@@ -32,7 +32,9 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                 initialValues={{ title: '', amount: '', date: moment().unix()*1000 }}
                 onSubmit={handleSubmit}
             >
-              {() => (
+              {({
+                  setFieldValue
+                }) => (
                   <Form>
                     <div style={{ marginBottom: 20 }}>
                       <label htmlFor="title">Title</label>
@@ -47,6 +49,7 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                       <DatePicker
                           autoOk
                           defaultValue={moment()}
+                          onChange={(e) => setFieldValue('date', e)}
                       />
                     </div>
                     <div style={{ marginBottom: 20 }}>
@@ -57,6 +60,7 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                               style={{ width: '100%' }}
                               component={Select}
                               defaultValue='Cash'
+                              onChange={(e) => setFieldValue('mode', e)}
                           >
                             <Option value=''>
                               -- Select Payment Method --
