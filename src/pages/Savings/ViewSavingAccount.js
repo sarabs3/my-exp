@@ -16,36 +16,31 @@ const ViewSaving = ({ savings, firebase, uid, mySavings }) => {
   if (!savings || !mySavings) return null;
   const myTotalSavings = mySavings.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
   console.log(myTotalSavings, myTotalSavings);
+  const amount = savings.emi * savings.duration;
+  const remainingEmis = moment().diff(savings.startDate, 'months') + 1;
   return (
       <div>
         <PageTitle>Savings</PageTitle>
         <Row>
-          {savings && savings.map(k => {
-            const amount = k.value.emi * k.value.duration;
-            const remainingEmis = moment().diff(k.value.startDate, 'months') + 1;
-            return (
-                <Col id={k.key} className="gutter-row" xs={24} sm={24} md={8} lg={8}>
-                  <Tile>
-                    <div>
-                      <Descriptions
-                          title={k.value.name}
-                          bordered
-                          column={1}
-                      >
-                        <Descriptions.Item label="Start Date">{moment(k.value.startDate).format('DD MM YYYY')}</Descriptions.Item>
-                        <Descriptions.Item label="End Date">{moment(k.value.endDate).format('DD MM YYYY')}</Descriptions.Item>
-                        <Descriptions.Item label="Amount"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(amount)}</Descriptions.Item>
-                        <Descriptions.Item label="Total Paid"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(myTotalSavings)}</Descriptions.Item>
-                        <Descriptions.Item label="Duration">{remainingEmis} / {k.value.duration}</Descriptions.Item>
-                        <Descriptions.Item label="EMI">{formatMoney(k.value.emi)}</Descriptions.Item>
-                        {/*<Descriptions.Item label="Remaining Amount">{formatMoney(emi * (totalEmis - remainingEmis))}</Descriptions.Item>*/}
-                        {/*<Descriptions.Item label="Interest Rate">{k.value.interestRate}</Descriptions.Item>*/}
-                      </Descriptions>
-                    </div>
-                  </Tile>
-                </Col>
-            )
-          })}
+          <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
+            <Tile>
+              <div>
+                <Descriptions
+                    title={savings.name}
+                    bordered
+                    column={1}
+                >
+                  <Descriptions.Item label="Start Date">{moment(savings.startDate).format('DD MM YYYY')}</Descriptions.Item>
+                  <Descriptions.Item label="End Date">{moment(savings.endDate).format('DD MM YYYY')}</Descriptions.Item>
+                  <Descriptions.Item label="Amount"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(amount)}</Descriptions.Item>
+                  <Descriptions.Item label="Total Paid"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(myTotalSavings)}</Descriptions.Item>
+                  <Descriptions.Item label="Expected Pay"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(savings.emi * remainingEmis )}</Descriptions.Item>
+                  <Descriptions.Item label="Duration">{remainingEmis} / {savings.duration}</Descriptions.Item>
+                  <Descriptions.Item label="EMI">{formatMoney(savings.emi)}</Descriptions.Item>
+                </Descriptions>
+              </div>
+            </Tile>
+          </Col>
         </Row>
       </div>
   );
@@ -56,7 +51,7 @@ const SavingsEnhancer =  compose(
       return (
         [
           {
-            path: `savingAccounts/${props.uid}`,
+            path: `savingAccounts/${props.uid}/${props.match.params.id}`,
             storeAs: 'savingAccounts'
           },
           {
@@ -67,7 +62,7 @@ const SavingsEnhancer =  compose(
         ])}
     ), connect(({ firebase }) => (
         {
-          savings: firebase.ordered.savingAccounts,
+          savings: firebase.data.savingAccounts,
           mySavings: firebase.ordered.mySavings,
         }
     )))(ViewSaving);
