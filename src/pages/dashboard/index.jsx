@@ -15,6 +15,7 @@ import {Snapshot} from '../../components/snapshot';
 import Stats from '../../components/stats';
 import Tile from "../../components/Tile/Tile";
 import LargeButton from '../../components/Button/Button';
+import { formatMoney } from '../../utils/priceFormatting';
 const {Content} = Layout;
 
 
@@ -69,13 +70,16 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
-        const {data, history } = this.props;
-        if (!data || !this.props.income) {
+        const {data, history, savings, loans } = this.props;
+        if (!data || !this.props.income || !savings || !loans) {
             return null
         }
+        const thisMonthSaving = currentMonth(savings);
+        const totalLoans = loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
         const filteredData = currentMonth(data);
         const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
+        const totalSavings = thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
         return (
             <Content>
                 <Row>
@@ -83,7 +87,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(stats[1].amount)}</h5>
                                 <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -92,7 +96,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Total Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalIncome}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalIncome)}</h5>
                                 <h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -105,8 +109,8 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Savings in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[6].amount}</h5>
-                                {/*<h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalSavings)}</h5>
+                                <h5><Link to="/dashboard/savings"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
@@ -123,8 +127,8 @@ class Dashboard extends React.Component {
                         <Tile customStyle={{ background: '#FAAF31' }}>
                             <h4>Liabilities & Loans</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
-                                {/*<h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalLoans)}</h5>
+                                <h5><Link to="/dashboard/loans"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
@@ -168,12 +172,20 @@ const DashboardEnhancer =  compose(
                 'Categories',
                 'paymentMode',
                 {
+                    path: `savings/${props.uid}`,
+                    storeAs: 'savings',
+                },
+                {
                     path: `data/${props.uid}`,
                     storeAs: 'data'
                 },
                 {
                     path: `income/${props.uid}`,
                     storeAs: 'income'
+                },
+                {
+                    path: `loans/${props.uid}`,
+                    storeAs: 'loans'
                 }
             ]
         )
@@ -184,6 +196,8 @@ const DashboardEnhancer =  compose(
             paymentMode: firebase.ordered.paymentMode,
             data: firebase.ordered.data,
             income: firebase.ordered.income,
+            savings: firebase.ordered.savings,
+            loans: firebase.ordered.loans,
         }
     ))
 )(Dashboard);

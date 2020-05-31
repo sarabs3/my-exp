@@ -31,6 +31,7 @@ class Form extends React.Component {
         handleSavings={this.handleSavings}
         categories={this.props.categories}
         paymentMode={this.props.paymentMode}
+        savingAccounts={this.props.savingAccounts}
       />
     )
   }
@@ -43,12 +44,17 @@ const FormEnhancer = compose(
       {
         path: `accounts/${props.uid}/`,
         storeAs: 'paymentMode',
+      },
+      {
+        path: `savingAccounts/${props.uid}/`,
+        storeAs: 'savingAccounts',
       }
     ]
   )),
   connect(({firebase}) => ({
     categories: firebase.ordered.Categories,
     paymentMode: firebase.ordered.paymentMode,
+    savingAccounts: firebase.ordered.savingAccounts,
     uid: firebase.auth.uid,
 })))(Form);
 

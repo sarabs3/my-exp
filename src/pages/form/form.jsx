@@ -8,15 +8,18 @@ import {
     Row,
     Col,
     DatePicker,
+    Switch,
     Button,
     Divider
 } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { Formik, Form, Field } from 'formik';
 
 const {Content} = Layout;
 const Option = Select.Option;
 
-const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
+const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, savingAccounts }) => {
+    console.log('savingAccounts', savingAccounts);
     return (
         <Content>
             <Row type="flex" justify='center'>
@@ -25,10 +28,15 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                     <h1>Add Income</h1>
                     <Divider />
                     <Formik
-                        initialValues={{ title: '', amount: '', date: moment().unix()*1000 }}
-                        onSubmit={onSubmit}
+                        initialValues={{ title: '', amount: '', date: moment().unix()*1000, expense: true, accountId: '' }}
+                        onSubmit={(values) => {
+                            values.expense ? onSubmit(values) : handleSavings(values);
+                        }}
                     >
-                        {() => (
+                        {({
+                            setFieldValue,
+                            values
+                          }) => (
                             <Form>
                                 <div style={{ marginBottom: 20 }}>
                                     <label htmlFor="title">Title</label>
@@ -39,12 +47,41 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                                     <Field name="amount" as={Input} />
                                 </div>
                                 <div style={{ marginBottom: 20 }}>
+                                    <Switch onChange={(e) => setFieldValue('expense', e)} checkedChildren="Expense" unCheckedChildren="Saving" defaultChecked />
+                                </div>
+                                <div style={{ marginBottom: 20 }}>
                                     <label className='form-col-form-label'  htmlFor="date">Date</label>
                                     <DatePicker
                                         autoOk
                                         defaultValue={moment()}
                                     />
                                 </div>
+                                {!values.expense && <div style={{ marginBottom: 20 }}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <label>Select Saving Account</label>
+                                            <Field
+                                                name="accountId"
+                                                style={{ width: '100%' }}
+                                                component={Select}
+                                                defaultValue=''
+                                                onChange={(e) => setFieldValue('accountId', e)}
+                                            >
+                                                <Option value=''>
+                                                    -- Select Saving Account --
+                                                </Option>
+                                                {
+                                                    savingAccounts && savingAccounts.map(item => (
+                                                            <Option value={item.key} key={item.key}>
+                                                                {item.value.name}
+                                                            </Option>
+                                                        )
+                                                    )
+                                                }
+                                            </Field>
+                                        </Col>
+                                    </Row>
+                                </div>}
                                 <div style={{ marginBottom: 20 }}>
                                     <Row>
                                         <Col span={12}>
@@ -53,14 +90,15 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                                                 style={{ width: '100%' }}
                                                 component={Select}
                                                 defaultValue='Cash'
+                                                onChange={(e) => setFieldValue('mode', e)}
                                             >
                                                 <Option value=''>
                                                     -- Select Payment Method --
                                                 </Option>
                                                 {
                                                     paymentMode && paymentMode.map(item => (
-                                                            <Option value={item.value} key={item.key}>
-                                                                {item.value}
+                                                            <Option value={item.key} key={item.key}>
+                                                                {item.value.name}
                                                             </Option>
                                                         )
                                                     )
@@ -77,6 +115,7 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                                                 style={{ width: '100%' }}
                                                 component={Select}
                                                 defaultValue='food'
+                                                onChange={(e) => setFieldValue('category', e)}
                                             >
                                                 <Option value=''>
                                                     -- Select Category --
@@ -116,4 +155,4 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
     );
 };
 
-export default AddIncome;
+export default AddExpense;
