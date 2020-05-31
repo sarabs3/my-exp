@@ -5,6 +5,7 @@ import { BrowserRouter} from 'react-router-dom'
 import store from "./store";
 import App from './app'
 import 'antd/dist/antd.css';
+import './index.css';
 
 const rootEl = document.getElementById("root");
 
