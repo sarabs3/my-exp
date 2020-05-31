@@ -70,11 +70,12 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
-        const {data, history, savings } = this.props;
-        if (!data || !this.props.income || !savings) {
+        const {data, history, savings, loans } = this.props;
+        if (!data || !this.props.income || !savings || !loans) {
             return null
         }
         const thisMonthSaving = currentMonth(savings);
+        const totalLoans = loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
         const filteredData = currentMonth(data);
         const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
@@ -126,7 +127,7 @@ class Dashboard extends React.Component {
                         <Tile customStyle={{ background: '#FAAF31' }}>
                             <h4>Liabilities & Loans</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalLoans)}</h5>
                                 <h5><Link to="/dashboard/loans"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -181,6 +182,10 @@ const DashboardEnhancer =  compose(
                 {
                     path: `income/${props.uid}`,
                     storeAs: 'income'
+                },
+                {
+                    path: `loans/${props.uid}`,
+                    storeAs: 'loans'
                 }
             ]
         )
@@ -192,6 +197,7 @@ const DashboardEnhancer =  compose(
             data: firebase.ordered.data,
             income: firebase.ordered.income,
             savings: firebase.ordered.savings,
+            loans: firebase.ordered.loans,
         }
     ))
 )(Dashboard);
