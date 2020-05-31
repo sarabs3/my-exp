@@ -15,6 +15,7 @@ import {Snapshot} from '../../components/snapshot';
 import Stats from '../../components/stats';
 import Tile from "../../components/Tile/Tile";
 import LargeButton from '../../components/Button/Button';
+import { formatMoney } from '../../utils/priceFormatting';
 const {Content} = Layout;
 
 
@@ -85,7 +86,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Total Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[1].amount}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(stats[1].amount)}</h5>
                                 <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -94,7 +95,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Total Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalIncome}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalIncome)}</h5>
                                 <h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
@@ -107,7 +108,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Savings in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalSavings}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalSavings)}</h5>
                                 {/*<h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
                             </div>
                         </Tile>
