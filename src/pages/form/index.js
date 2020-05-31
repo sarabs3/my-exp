@@ -31,6 +31,7 @@ class Form extends React.Component {
         handleSavings={this.handleSavings}
         categories={this.props.categories}
         paymentMode={this.props.paymentMode}
+        savingAccounts={this.props.savingAccounts}
       />
     )
   }
