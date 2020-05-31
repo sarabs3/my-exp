@@ -59,8 +59,8 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                                                 </Option>
                                                 {
                                                     paymentMode && paymentMode.map(item => (
-                                                            <Option value={item.value} key={item.key}>
-                                                                {item.value}
+                                                            <Option value={item.key} key={item.key}>
+                                                                {item.value.name}
                                                             </Option>
                                                         )
                                                     )
