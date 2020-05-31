@@ -43,12 +43,17 @@ const FormEnhancer = compose(
       {
         path: `accounts/${props.uid}/`,
         storeAs: 'paymentMode',
+      },
+      {
+        path: `savingAccounts/${props.uid}/`,
+        storeAs: 'savingAccounts',
       }
     ]
   )),
   connect(({firebase}) => ({
     categories: firebase.ordered.Categories,
     paymentMode: firebase.ordered.paymentMode,
+    savingAccounts: firebase.ordered.savingAccounts,
     uid: firebase.auth.uid,
 })))(Form);
 
