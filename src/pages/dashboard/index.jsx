@@ -127,7 +127,7 @@ class Dashboard extends React.Component {
                             <h4>Liabilities & Loans</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                                 <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
-                                {/*<h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                                <h5><Link to="/dashboard/loans"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
