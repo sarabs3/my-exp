@@ -28,6 +28,8 @@ import TransactionsDetail from '../pages/transectionsDetails.page';
 import Dashboard from '../pages/dashboard';
 import Accounts from '../pages/Accounts';
 import Loans from "../pages/Loans/Loans";
+import Savings from "../pages/Savings/Savings";
+import ViewSavingAccount from "../pages/Savings/ViewSavingAccount";
 
 const { Header, Content } = Layout;
 
@@ -69,6 +71,8 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/accounts" component={Accounts} />
                                         <Route path="/dashboard/income/add" component={AddIncome} />
                                         <Route path="/dashboard/loans" component={Loans} />
+                                        <Route path="/dashboard/savings/:id" component={ViewSavingAccount} />
+                                        <Route path="/dashboard/savings" component={Savings} />
                                         <Route path="/" component={Dashboard}  />
                                     </Switch>
                                 </Wrapper>
