@@ -8,15 +8,17 @@ import {
     Row,
     Col,
     DatePicker,
+    Switch,
     Button,
     Divider
 } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { Formik, Form, Field } from 'formik';
 
 const {Content} = Layout;
 const Option = Select.Option;
 
-const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
+const AddIncome = ({ onSubmit, reset, paymentMode, categories, handleSavings }) => {
     return (
         <Content>
             <Row type="flex" justify='center'>
@@ -25,10 +27,14 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                     <h1>Add Income</h1>
                     <Divider />
                     <Formik
-                        initialValues={{ title: '', amount: '', date: moment().unix()*1000 }}
-                        onSubmit={onSubmit}
+                        initialValues={{ title: '', amount: '', date: moment().unix()*1000, expense: true }}
+                        onSubmit={(values) => {
+                            values.expense ? onSubmit(values) : handleSavings(values);
+                        }}
                     >
-                        {() => (
+                        {({
+                            setFieldValue
+                          }) => (
                             <Form>
                                 <div style={{ marginBottom: 20 }}>
                                     <label htmlFor="title">Title</label>
@@ -37,6 +43,9 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                                 <div style={{ marginBottom: 20 }}>
                                     <label htmlFor="amount">Amount</label>
                                     <Field name="amount" as={Input} />
+                                </div>
+                                <div style={{ marginBottom: 20 }}>
+                                    <Switch onChange={(e) => setFieldValue('expense', e)} checkedChildren="Expense" unCheckedChildren="Saving" defaultChecked />
                                 </div>
                                 <div style={{ marginBottom: 20 }}>
                                     <label className='form-col-form-label'  htmlFor="date">Date</label>

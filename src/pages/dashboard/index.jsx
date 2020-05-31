@@ -69,13 +69,15 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
-        const {data, history } = this.props;
-        if (!data || !this.props.income) {
+        const {data, history, savings } = this.props;
+        if (!data || !this.props.income || !savings) {
             return null
         }
+        const thisMonthSaving = currentMonth(savings);
         const filteredData = currentMonth(data);
         const totalIncome = income(currentMonth(this.props.income));
         const stats = generateStats(filteredData, concatValues(filteredData));
+        const totalSavings = thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
         return (
             <Content>
                 <Row>
@@ -105,7 +107,7 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Savings in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;{stats[6].amount}</h5>
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{totalSavings}</h5>
                                 {/*<h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
                             </div>
                         </Tile>
@@ -168,6 +170,10 @@ const DashboardEnhancer =  compose(
                 'Categories',
                 'paymentMode',
                 {
+                    path: `savings/${props.uid}`,
+                    storeAs: 'savings',
+                },
+                {
                     path: `data/${props.uid}`,
                     storeAs: 'data'
                 },
@@ -184,6 +190,7 @@ const DashboardEnhancer =  compose(
             paymentMode: firebase.ordered.paymentMode,
             data: firebase.ordered.data,
             income: firebase.ordered.income,
+            savings: firebase.ordered.savings,
         }
     ))
 )(Dashboard);
