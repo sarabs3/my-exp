@@ -70,14 +70,14 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
-        const {data, history, savings, loans } = this.props;
-        console.log('uid', data);
+        const {data, history, savings, loans, accounts } = this.props;
         const thisMonthSaving = savings ? currentMonth(savings) : [];
         const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
         const filteredData = data ? currentMonth(data) : [];
         const totalIncome = this.props.income ? income(currentMonth(this.props.income)) : 0;
         const stats = generateStats(filteredData, concatValues(filteredData));
         const totalSavings = thisMonthSaving.length > 0  ? thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
+        const accountBalance = accounts ? accounts.map(k => parseInt(k.value.balance)).reduce((a,b) => a+b) : 0;
         return (
             <Content>
                 <Row>
@@ -116,8 +116,8 @@ class Dashboard extends React.Component {
                         <Tile>
                             <h4>Accounts Balance </h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                                <h5><span className="fas fa-rupee-sign" />&nbsp;0</h5>
-                                {/*<h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>*/}
+                                <h5><span className="fas fa-rupee-sign" />&nbsp;{accountBalance}</h5>
+                                <h5><Link to="/dashboard/accounts"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
                             </div>
                         </Tile>
                     </Col>
@@ -191,6 +191,10 @@ const DashboardEnhancer =  compose(
                 {
                     path: `loans/${props.uid}`,
                     storeAs: 'loans'
+                },
+                {
+                    path: `accounts/${props.uid}`,
+                    storeAs: 'accounts'
                 }
             ]
         )
@@ -203,6 +207,7 @@ const DashboardEnhancer =  compose(
             income: firebase.ordered.income,
             savings: firebase.ordered.savings,
             loans: firebase.ordered.loans,
+            accounts: firebase.ordered.accounts,
         }
     ))
 )(Dashboard);
