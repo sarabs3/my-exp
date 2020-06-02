@@ -97,7 +97,6 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                                                 name="mode"
                                                 style={{ width: '100%' }}
                                                 component={Select}
-                                                defaultValue='Cash'
                                                 onChange={(e) => setFieldValue('mode', e)}
                                             >
                                                 <Option value=''>
