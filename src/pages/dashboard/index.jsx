@@ -70,15 +70,12 @@ class Dashboard extends React.Component {
         historyFlag: false,
     };
     render() {
-        console.log('uid', this.props.uid);
         const {data, history, savings, loans } = this.props;
-        if (!data) {
-            return null;
-        }
+        console.log('uid', data);
         const thisMonthSaving = savings ? currentMonth(savings) : [];
         const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
-        const filteredData = currentMonth(data);
-        const totalIncome = income(currentMonth(this.props.income));
+        const filteredData = data ? currentMonth(data) : [];
+        const totalIncome = this.props.income ? income(currentMonth(this.props.income)) : 0;
         const stats = generateStats(filteredData, concatValues(filteredData));
         const totalSavings = thisMonthSaving.length > 0  ? thisMonthSaving.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
         return (
