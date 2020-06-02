@@ -71,7 +71,7 @@ class Dashboard extends React.Component {
     };
     render() {
         const {data, history, savings, loans, accounts } = this.props;
-        const thisMonthSaving = savings ? currentMonth(savings) : [];
+        const thisMonthSaving = savings ? savings : [];
         const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
         const filteredData = data ? currentMonth(data) : [];
         const totalIncome = this.props.income ? income(currentMonth(this.props.income)) : 0;
@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
                 <Row>
                     <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
                         <Tile>
-                            <h4>Total Spend in {moment().format('MMMM')}</h4>
+                            <h4>Spend in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                                 <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(stats[1] && stats[1].amount)}</h5>
                                 <h5><Link to="/dashboard/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col className="gutter-row"  xs={24} sm={24} md={8} lg={8}>
                         <Tile>
-                            <h4>Total Income in {moment().format('MMMM')}</h4>
+                            <h4>Income in {moment().format('MMMM')}</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                                 <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalIncome)}</h5>
                                 <h5><Link to="/dashboard/income/month"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
@@ -105,7 +105,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={8} lg={8}>
                         <Tile>
-                            <h4>Savings in {moment().format('MMMM')}</h4>
+                            <h4>Total Savings</h4>
                             <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                                 <h5><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(totalSavings)}</h5>
                                 <h5><Link to="/dashboard/savings"><span className="fas fa-arrow-right" /></Link> &nbsp;</h5>
