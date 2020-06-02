@@ -9,17 +9,21 @@ import AddForm from './form';
 class Form extends React.Component {
   state = {
     formSubmit: false
-  }
-  handleSubmit = (values, savings) => {
+  };
+  handleSubmit = (values) => {
     const {uid} = this.props;
-    this.props.firebase.push(`data/${uid}/`,values)
-    .then(() => this.setState(()=>({formSubmit:true})));
-  }
+    this.props.firebase.push(`data/${uid}/`,{ ...values, mode: values.mode.key })
+    .then(() => {
+      this.setState(()=>({formSubmit:true}));
+      const balance = parseInt(values.mode.value.balance) - parseInt(values.amount);
+      this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
+    });
+  };
   handleSavings = (values) => {
     const {uid} = this.props;
     this.props.firebase.push(`savings/${uid}/`,values)
     .then(() => this.setState(()=>({formSubmit:true})));
-  }
+  };
   render () {
     const { formSubmit } = this.state;
     if ( formSubmit ) {

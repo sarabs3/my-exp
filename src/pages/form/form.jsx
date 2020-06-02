@@ -19,7 +19,16 @@ const {Content} = Layout;
 const Option = Select.Option;
 
 const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, savingAccounts }) => {
-    console.log('savingAccounts', savingAccounts);
+    // paymentMode
+    const submit = (values) => {
+        if (values.expense) {
+            const getMode = paymentMode.find(k => k.key === values.mode);
+            const payload = { ...values, mode: getMode };
+            onSubmit(payload);
+            return;
+        }
+        handleSavings(values);
+    };
     return (
         <Content>
             <Row type="flex" justify='center'>
@@ -29,9 +38,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                     <Divider />
                     <Formik
                         initialValues={{ title: '', amount: '', date: moment().unix()*1000, expense: true, accountId: '' }}
-                        onSubmit={(values) => {
-                            values.expense ? onSubmit(values) : handleSavings(values);
-                        }}
+                        onSubmit={submit}
                     >
                         {({
                             setFieldValue,

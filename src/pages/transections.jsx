@@ -8,9 +8,9 @@ import {Snapshot} from "../components/snapshot";
 import { sort, concatValues } from "../utils";
 
 const Transections = (data, total) => {
-    if ( data.length ) {
+    if ( data.length > 0 ) {
         const totalSpent = concatValues(data);
-        let notToCount = data.filter(item => !item.value.mode.includes('Credit'));
+        let notToCount = data.filter(item => item.value.mode && !item.value.mode.includes('Credit'));
         notToCount = concatValues(notToCount);
         return [
             {
