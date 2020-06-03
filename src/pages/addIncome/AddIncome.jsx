@@ -18,8 +18,10 @@ const {Content} = Layout;
 const Option = Select.Option;
 
 const AddIncome = ({ onSubmit, reset, paymentMode }) => {
-  const handleSubmit = (e) => {
-    onSubmit(e);
+  const handleSubmit = (values) => {
+    const getMode = paymentMode.find(k => k.key === values.mode);
+    const payload = { ...values, mode: getMode };
+    onSubmit(payload);
   };
   return (
       <Content>
@@ -59,7 +61,6 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                               name="mode"
                               style={{ width: '100%' }}
                               component={Select}
-                              defaultValue='Cash'
                               onChange={(e) => setFieldValue('mode', e)}
                           >
                             <Option value=''>
@@ -67,8 +68,8 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                             </Option>
                             {
                               paymentMode && paymentMode.map(item => (
-                                      <Option value={item.value} key={item.key}>
-                                        {item.value}
+                                      <Option value={item.key} key={item.key}>
+                                        {item.value.name}
                                       </Option>
                                   )
                               )
