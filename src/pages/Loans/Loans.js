@@ -32,8 +32,7 @@ const Loans = ({ loans }) => {
                         <Descriptions.Item label="Amount"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(k.value.amount)}</Descriptions.Item>
                         <Descriptions.Item label="EMI"><span className="fas fa-rupee-sign" />&nbsp;{formatMoney(emi)}</Descriptions.Item>
                         <Descriptions.Item label="difference">{remainingEmis} / {totalEmis}</Descriptions.Item>
-                        <Descriptions.Item label="Total Amount">{formatMoney(emi * totalEmis)}</Descriptions.Item>
-                        <Descriptions.Item label="Remaining Amount">{formatMoney(emi * (totalEmis - remainingEmis))}</Descriptions.Item>
+                        <Descriptions.Item label="Remaining Amount">{k.value.balance || formatMoney(emi * (totalEmis - remainingEmis))}</Descriptions.Item>
                         <Descriptions.Item label="Interest Rate">{k.value.interestRate}</Descriptions.Item>
                       </Descriptions>
                     </div>
