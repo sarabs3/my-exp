@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
     render() {
         const {data, history, savings, loans, accounts } = this.props;
         const thisMonthSaving = savings ? savings : [];
-        const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b) : 0;
+        const totalLoans = loans && loans.length > 0 ? loans.map(k => parseInt(k.value.balance)).reduce((a,b) => a+b) : 0;
         const filteredData = data ? currentMonth(data) : [];
         const totalIncome = this.props.income ? income(currentMonth(this.props.income)) : 0;
         const stats = generateStats(filteredData, concatValues(filteredData));

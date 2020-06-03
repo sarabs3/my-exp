@@ -18,17 +18,24 @@ import { Formik, Form, Field } from 'formik';
 const {Content} = Layout;
 const Option = Select.Option;
 
-const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, savingAccounts }) => {
+const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, savingAccounts, loanAccounts }) => {
     // paymentMode
     const submit = (values) => {
+        const date = moment(values.date).unix() * 1000;
+        values.date = date;
         if (values.expense) {
             const getMode = paymentMode.find(k => k.key === values.mode);
-            const payload = { ...values, mode: getMode };
+            let payload = { ...values, mode: getMode };
+            if(values.category == 7) {
+                const loanAccount = loanAccounts.find(k => k.key === values.loanAccount);
+                payload = { ...payload, loanAccount };
+            }
             onSubmit(payload);
             return;
         }
         handleSavings(values);
     };
+    console.log(loanAccounts, 'loanAccounts');
     return (
         <Content>
             <Row type="flex" justify='center'>
@@ -37,7 +44,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                     <h1>Add Income</h1>
                     <Divider />
                     <Formik
-                        initialValues={{ title: '', amount: '', date: moment().unix()*1000, expense: true, accountId: '' }}
+                        initialValues={{ title: '', amount: '', date: moment().unix()*1000, expense: true, accountId: '', loanAccount: '' }}
                         onSubmit={submit}
                     >
                         {({
@@ -131,7 +138,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                                                     categories && categories.map(
                                                         item => (
                                                             <Option
-                                                                value={item.value}
+                                                                value={item.key}
                                                                 key={item.key}
                                                             >
                                                                 {item.value}
@@ -142,6 +149,26 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                                             </Field>
                                         </Col>
                                     </Row>
+                                    {values.category == 7 && (
+                                        <Row>
+                                            <Col span={12}>
+                                                <Field
+                                                    name="loanAccount"
+                                                    style={{ width: '100%' }}
+                                                    component={Select}
+                                                    defaultValue='food'
+                                                    onChange={(e) => setFieldValue('loanAccount', e)}
+                                                >
+                                                    <Option value=''>
+                                                        -- Select Category --
+                                                    </Option>
+                                                    {loanAccounts && loanAccounts.map(k => (
+                                                        <Option value={k.key} key={k.key} >{k.value.name}</Option>
+                                                    ))}
+                                                </Field>
+                                            </Col>
+                                        </Row>
+                                    )}
                                 </div>
                                 <div>
                                     <Row>

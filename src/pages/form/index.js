@@ -12,11 +12,20 @@ class Form extends React.Component {
   };
   handleSubmit = (values) => {
     const {uid} = this.props;
-    this.props.firebase.push(`data/${uid}/`,{ ...values, mode: values.mode.key })
+    const loanAccount = values.loanAccount ? values.loanAccount : {};
+    this.props.firebase.push(`data/${uid}/`,{ ...values, mode: values.mode.key, loanAccount: loanAccount.key })
     .then(() => {
       this.setState(()=>({formSubmit:true}));
       const balance = parseInt(values.mode.value.balance) - parseInt(values.amount);
-      this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
+      this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance })
+        .then(() => {
+            if (values.category == 7) {
+              const loanBalance = parseInt(values.loanAccount.value.balance) - parseInt(values.amount);
+              console.log('values.loanAccount', values.loanAccount, loanBalance);
+              this.props.firebase.update(`loans/${uid}/${values.loanAccount.key}`, { ...values.loanAccount.value, balance: loanBalance });
+            }
+        })
+
     });
   };
   handleSavings = (values) => {
@@ -36,6 +45,7 @@ class Form extends React.Component {
         categories={this.props.categories}
         paymentMode={this.props.paymentMode}
         savingAccounts={this.props.savingAccounts}
+        loanAccounts={this.props.loanAccounts}
       />
     )
   }
@@ -52,6 +62,10 @@ const FormEnhancer = compose(
       {
         path: `savingAccounts/${props.uid}/`,
         storeAs: 'savingAccounts',
+      },
+      {
+        path: `loans/${props.uid}/`,
+        storeAs: 'loanAccounts',
       }
     ]
   )),
@@ -59,6 +73,7 @@ const FormEnhancer = compose(
     categories: firebase.ordered.Categories,
     paymentMode: firebase.ordered.paymentMode,
     savingAccounts: firebase.ordered.savingAccounts,
+    loanAccounts: firebase.ordered.loanAccounts,
     uid: firebase.auth.uid,
 })))(Form);
 
