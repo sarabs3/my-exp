@@ -16,7 +16,7 @@ class Income extends React.Component {
         .then(() => {
           this.setState(()=>({formSubmit:true}));
           if (values.mode) {
-              const balance = parseInt(values.mode.value.balance) + parseInt(values.amount);
+              const balance = parseInt(values.mode.value.balance, 10) + parseInt(values.amount, 10);
               this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
           }
         });

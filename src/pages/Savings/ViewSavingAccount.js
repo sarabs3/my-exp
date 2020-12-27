@@ -13,7 +13,7 @@ const ViewSaving = ({ savings, mySavings }) => {
     // firebase.push(`savingAccounts/${uid}`, { name: 'kmeti 1 - 1,50,000', duration: 10 });
   }, []);
   if (!savings || !mySavings) return null;
-  const myTotalSavings = mySavings.map(k => parseInt(k.value.amount)).reduce((a,b) => a+b);
+  const myTotalSavings = mySavings.map(k => parseInt(k.value.amount), 10).reduce((a,b) => a+b);
   console.log(myTotalSavings, myTotalSavings);
   const amount = savings.emi * savings.duration;
   const remainingEmis = moment().diff(savings.startDate, 'months') + 1;

@@ -17,12 +17,12 @@ class Form extends React.Component {
     .then(() => {
       this.setState(()=>({formSubmit:true}));
       if (values.mode) {
-        const balance = parseInt(values.mode.value.balance) - parseInt(values.amount);
+        const balance = parseInt(values.mode.value.balance, 10) - parseInt(values.amount, 10);
         this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance })
           .then(() => {
               if (values.category === 7) {
                 if (values.loanAccount) {
-                  const loanBalance = parseInt(values.loanAccount.value.balance) - parseInt(values.amount);
+                  const loanBalance = parseInt(values.loanAccount.value.balance, 10) - parseInt(values.amount, 10);
                   this.props.firebase.update(`loans/${uid}/${values.loanAccount.key}`, { ...values.loanAccount.value, balance: loanBalance });
                 }
               }
