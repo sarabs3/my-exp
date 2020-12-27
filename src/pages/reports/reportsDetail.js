@@ -2,14 +2,8 @@ import React from 'react';
 import {List, Divider } from 'antd';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import {groupBy} from '../../utils';
 
 window.moment = moment;
-const getD = (data, filter) =>  data.filter(item => {
-    const month = moment(item.value.date).format('MMMM');
-    const year = moment(item.value.date).year();
-    return filter.month === month && filter.year == year;
-});
 
 const ReportsDetail = ({ filterData, group, ...props }) => {
     if (props.data && props.data.length) {

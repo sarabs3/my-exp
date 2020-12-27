@@ -1,13 +1,11 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import { Button, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import {firebaseConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
 import Media from 'react-media'
 import './login.css';
 
-const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
     handleSubmit = e => {

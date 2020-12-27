@@ -9,7 +9,7 @@ import {groupBy} from '../../utils';
 const getD = (data, filter) =>  data.length && data.filter(item => {
     const month = moment(item.value.date).format('MMMM');
     const year = moment(item.value.date).year();
-    return filter.month === month && filter.year == year;
+    return filter.month === month && filter.year === year;
 });
 
 class ReportsDetailContainer extends React.PureComponent {

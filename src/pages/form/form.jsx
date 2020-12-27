@@ -12,24 +12,21 @@ import {
     Button,
     Divider
 } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { Formik, Form, Field } from 'formik';
 
 const {Content} = Layout;
 const Option = Select.Option;
 
-const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, savingAccounts, loanAccounts }) => {
+const AddExpense = ({ onSubmit, reset, paymentMode = [], categories, handleSavings, savingAccounts, loanAccounts = [] }) => {
     // paymentMode
     const submit = (values) => {
-        const date = moment(values.date).unix() * 1000;
-        values.date = date;
+        values.date = moment(values.date).unix() * 1000;
         if (values.expense) {
-            const getMode = paymentMode.find(k => k.key === values.mode);
-            let payload = { ...values, mode: getMode };
-            if(values.category == 7) {
-                const loanAccount = loanAccounts.find(k => k.key === values.loanAccount);
-                payload = { ...payload, loanAccount };
-            }
+            let payload = { ...values };
+            const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode.key) : null;
+            if (paymentMode) { payload.mode = getMode }
+            const loanAccount = loanAccounts ? loanAccounts.find(k => k.key === values.loanAccount.key) : null;
+            if (loanAccounts) { payload.loanAccount = loanAccount }
             onSubmit(payload);
             return;
         }
@@ -149,7 +146,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode, categories, handleSavings, s
                                             </Field>
                                         </Col>
                                     </Row>
-                                    {values.category == 7 && (
+                                    {values.category === 7 && (
                                         <Row>
                                             <Col span={12}>
                                                 <Field

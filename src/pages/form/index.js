@@ -11,21 +11,23 @@ class Form extends React.Component {
     formSubmit: false
   };
   handleSubmit = (values) => {
+    console.log('values', values, values.loanAccount && typeof values.loanAccount === 'object', typeof values.loanAccount);
     const {uid} = this.props;
-    const loanAccount = values.loanAccount ? values.loanAccount : {};
-    this.props.firebase.push(`data/${uid}/`,{ ...values, mode: values.mode.key, loanAccount: loanAccount.key })
+    this.props.firebase.push(`data/${uid}/`,{ ...values })
     .then(() => {
       this.setState(()=>({formSubmit:true}));
-      const balance = parseInt(values.mode.value.balance) - parseInt(values.amount);
-      this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance })
-        .then(() => {
-            if (values.category == 7) {
-              const loanBalance = parseInt(values.loanAccount.value.balance) - parseInt(values.amount);
-              console.log('values.loanAccount', values.loanAccount, loanBalance);
-              this.props.firebase.update(`loans/${uid}/${values.loanAccount.key}`, { ...values.loanAccount.value, balance: loanBalance });
-            }
-        })
-
+      if (values.mode) {
+        const balance = parseInt(values.mode.value.balance) - parseInt(values.amount);
+        this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance })
+          .then(() => {
+              if (values.category === 7) {
+                if (values.loanAccount) {
+                  const loanBalance = parseInt(values.loanAccount.value.balance) - parseInt(values.amount);
+                  this.props.firebase.update(`loans/${uid}/${values.loanAccount.key}`, { ...values.loanAccount.value, balance: loanBalance });
+                }
+              }
+          })
+      }
     });
   };
   handleSavings = (values) => {
@@ -49,7 +51,7 @@ class Form extends React.Component {
       />
     )
   }
-};
+}
 
 const FormEnhancer = compose(
   firebaseConnect((props) => (
