@@ -1,9 +1,6 @@
 import React from 'react';
-import {Card} from 'antd';
 import { Button } from 'antd';
-import { List, Avatar } from 'antd';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
@@ -95,7 +92,7 @@ class Summary extends React.Component {
             </React.Fragment>
         )
     }
-};
+}
 
 const enhancer = compose(
     firebaseConnect(

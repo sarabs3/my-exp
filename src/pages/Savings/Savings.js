@@ -9,7 +9,7 @@ import {compose} from "redux";
 import {firebaseConnect} from "react-redux-firebase";
 import {Link} from "react-router-dom";
 
-const Savings = ({ savings, firebase, uid }) => {
+const Savings = ({ savings }) => {
   useEffect(() => {
     // firebase.push(`savingAccounts/${uid}`, { name: 'kmeti 2 - 1,50,000', duration: 10 });
   }, []);
@@ -19,8 +19,6 @@ const Savings = ({ savings, firebase, uid }) => {
         <PageTitle>Savings</PageTitle>
         <Row>
           {savings && savings.map(k => {
-            const remainingEmis = moment().diff(k.value.startDate, 'months');
-            const totalEmis = moment(k.value.endDate).diff(k.value.startDate, 'months') + 1;
             const amount = k.value.emi * k.value.duration;
             return (
                 <Col id={k.key} className="gutter-row" xs={24} sm={24} md={8} lg={8}>

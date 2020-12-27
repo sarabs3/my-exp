@@ -7,7 +7,7 @@ import { compose } from "redux";
 import {Snapshot} from "../components/snapshot";
 import { sort, concatValues } from "../utils";
 
-const Transections = (data, total) => {
+export const Transections = (data, total) => {
     if ( data.length > 0 ) {
         const totalSpent = concatValues(data);
         let notToCount = data.filter(item => item.value.mode && !item.value.mode.includes('Credit'));
@@ -68,16 +68,14 @@ class Summary extends React.Component {
         if (!data) {
             return null;
         }
-        const filteredData = data;
-        const stats = Transections(filteredData, concatValues(data));
-        const transectionsdata = sort(filteredData, sorted);
+        const transectionsdata = sort(data, sorted);
         return (
             <React.Fragment>
                 <Snapshot title={`All Transactions ${transectionsdata.length}`} data={transectionsdata} sorted={sorted} />
             </React.Fragment>
         )
     }
-};
+}
 
 const enhancer = compose(
     firebaseConnect(
@@ -100,7 +98,7 @@ const enhancer = compose(
 );
 
 const SummaryEnhancer = enhancer(Summary);
-export default connect(
+    export default connect(
     ({firebase}) => ({
         uid: firebase.auth.uid
     })

@@ -12,11 +12,13 @@ class Income extends React.Component {
   }
   handleSubmit = (values) => {
     const {uid} = this.props;
-    this.props.firebase.push(`income/${uid}/`,{ ...values, mode: values.mode.key })
+    this.props.firebase.push(`income/${uid}/`,{ ...values })
         .then(() => {
           this.setState(()=>({formSubmit:true}));
-          const balance = parseInt(values.mode.value.balance) + parseInt(values.amount);
-          this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
+          if (values.mode) {
+              const balance = parseInt(values.mode.value.balance) + parseInt(values.amount);
+              this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
+          }
         });
   }
   render () {
@@ -32,7 +34,7 @@ class Income extends React.Component {
       />
     )
   }
-};
+}
 
 const FormEnhancer = compose(
   firebaseConnect((props) => (['Categories',{

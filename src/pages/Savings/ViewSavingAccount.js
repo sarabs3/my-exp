@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Col, Row, Descriptions, Button} from "antd";
+import {Col, Row, Descriptions} from "antd";
 import moment from 'moment';
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Tile from "../../components/Tile/Tile";
@@ -7,9 +7,8 @@ import {formatMoney} from "../../utils/priceFormatting";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {firebaseConnect} from "react-redux-firebase";
-import {Link} from "react-router-dom";
 
-const ViewSaving = ({ savings, firebase, uid, mySavings }) => {
+const ViewSaving = ({ savings, mySavings }) => {
   useEffect(() => {
     // firebase.push(`savingAccounts/${uid}`, { name: 'kmeti 1 - 1,50,000', duration: 10 });
   }, []);

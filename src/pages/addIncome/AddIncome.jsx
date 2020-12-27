@@ -19,8 +19,9 @@ const Option = Select.Option;
 
 const AddIncome = ({ onSubmit, reset, paymentMode }) => {
   const handleSubmit = (values) => {
-    const getMode = paymentMode.find(k => k.key === values.mode);
-    const payload = { ...values, mode: getMode };
+    const payload = { ...values };
+    const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode) : null;
+    if (paymentMode) { payload.mode = getMode.key }
     onSubmit(payload);
   };
   return (
