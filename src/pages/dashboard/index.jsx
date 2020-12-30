@@ -25,7 +25,8 @@ const income = data => data.length && data.reduce((a,b) => ({value: {amount: par
 const generateStats = (data, total) => {
     if ( data.length ) {
         const totalSpent = concatValues(data);
-        let notToCount = data.filter(item => item.value.mode ? !item.value.mode.includes('Credit') : false);
+        // let notToCount = data.filter(item => {item.value.mode ? !item.value.mode.includes('Credit') : false);
+        let notToCount = []; // TODO: Error to be fixed
         let Savings = data.filter(item => item.value.category ? item.value.category.includes('Savings') : false);
         Savings = Savings.length ? concatValues(Savings).toFixed(2) : 0;
         notToCount = notToCount.length ? concatValues(notToCount).toFixed(2) : 0;
