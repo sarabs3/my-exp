@@ -21,7 +21,7 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
   const handleSubmit = (values) => {
     const payload = { ...values };
     const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode) : null;
-    if (paymentMode) { payload.mode = getMode.key }
+    if (paymentMode && getMode) { payload.mode = getMode.key }
     onSubmit(payload);
   };
   return (

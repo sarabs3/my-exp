@@ -23,10 +23,10 @@ const AddExpense = ({ onSubmit, reset, paymentMode = [], categories, handleSavin
         values.date = moment(values.date).unix() * 1000;
         if (values.expense) {
             let payload = { ...values };
-            const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode.key) : null;
-            if (paymentMode) { payload.mode = getMode }
-            const loanAccount = loanAccounts ? loanAccounts.find(k => k.key === values.loanAccount.key) : null;
-            if (loanAccounts) { payload.loanAccount = loanAccount }
+            const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode) : null;
+            if (paymentMode && getMode) { payload.mode = getMode }
+            const loanAccount = loanAccounts ? loanAccounts.find(k => k.key === values.loanAccount) : null;
+            if (loanAccounts && loanAccount) { payload.loanAccount = loanAccount }
             onSubmit(payload);
             return;
         }
