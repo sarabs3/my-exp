@@ -125,6 +125,9 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                     <Button onClick={getReportData} type="primary">Submit</Button>
                 </Col>
             </Row>
+            <Row style={{ marginTop: 20}}>
+                {form.category && <Tag color="magenta">{categories.find((cat) => cat.key === form.category).value.title}</Tag>}
+            </Row>
             <Row>
                 <Col span={12}>
                     <List
@@ -132,7 +135,7 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                         header={<h3>{`${records.length} Records`}</h3>}
                         dataSource={records}
                         renderItem={item => {
-                            const {value: {title, amount, date, category}} = item;
+                            const {value: {title, amount, date}} = item;
                             const day = moment(date).format('Do');
                             const month = moment(date).format(' MMM');
                             return (
@@ -142,7 +145,6 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                                     <List.Item.Meta
                                         title={<div>
                                             <h4>{title}</h4>
-                                            {category && <Tag color="magenta">{category}</Tag>}
                                         </div>}
                                         description={amount}
                                     />
