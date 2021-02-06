@@ -75,6 +75,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/loans" component={Loans} />
                                         <Route path="/dashboard/categories" exact component={Categories} />
                                         <Route path="/dashboard/categories/add" exact component={AddCategory} />
+                                        <Route path="/dashboard/categories/edit/:id" exact component={AddCategory} />
                                         <Route path="/dashboard/savings/:id" component={ViewSavingAccount} />
                                         <Route path="/dashboard/savings" component={Savings} />
                                         <Route path="/" component={Dashboard}  />

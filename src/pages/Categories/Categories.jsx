@@ -6,7 +6,7 @@ import {compose} from "redux";
 import {firebaseConnect} from "react-redux-firebase";
 import {Link} from "react-router-dom";
 
-const Categories = ({ categories }) => {
+const Categories = ({ categories, history }) => {
     if (!categories) return null;
     return (
         <div className="site-layout-content">
@@ -27,7 +27,13 @@ const Categories = ({ categories }) => {
                         renderItem={item => (
                             <List.Item
                                 actions={[
-                                    <Button type="link">Edit</Button>]}
+                                    <Button
+                                        onClick={() => history.push({
+                                            pathname: `/dashboard/categories/edit/${item.key}`,
+                                            state: {...item.value}
+                                        })}
+                                        type="link"
+                                    >Edit</Button>]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar />}

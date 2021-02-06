@@ -1,12 +1,19 @@
-import React  from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, Row, Button, Form, Input} from "antd";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import {connect} from "react-redux";
 import {firebaseConnect} from "react-redux-firebase";
 
-const AddCategories = ({ firebase, uid, history }) => {
+const AddCategories = ({ firebase, uid, history, match, location }) => {
     const [form] = Form.useForm();
+    const [edit, setEdit] = useState(false);
     const onFinish = (values) => {
+        if (match.params.id) {
+            firebase.update(`Categories/${uid}/${match.params.id}`, { ...values })
+                .then(() => history.push("/dashboard/categories"))
+                .catch(a => console.log('error', a))
+            return;
+        }
         firebase.push(`Categories/${uid}/`,{ ...values })
             .then(() => history.push("/dashboard/categories"))
             .catch(a => console.log('error', a))
@@ -14,11 +21,16 @@ const AddCategories = ({ firebase, uid, history }) => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    useEffect(() => {
+        if (match.params.id) {
+            setEdit(true);
+        }
+    }, [])
     return (
         <div className="site-layout-content">
             <Row>
                 <Col span={12}>
-                    <PageTitle>Add Category</PageTitle>
+                    <PageTitle>{edit ? "Edit" :"Add"} Category</PageTitle>
                 </Col>
             </Row>
             <Row>
@@ -28,7 +40,9 @@ const AddCategories = ({ firebase, uid, history }) => {
                         name="addCategories"
                         form={form}
                         onFinish={onFinish}
-                        initialValues={{ title: "", description: "" }}
+                        initialValues={
+                            edit ? { title: "", description: "" }
+                            : {...location.state}}
                         onFinishFailed={onFinishFailed}
                     >
                         <Form.Item
