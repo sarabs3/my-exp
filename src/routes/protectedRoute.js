@@ -10,7 +10,6 @@ import Wrapper from '../components/wrapper';
 import {Motion, spring} from 'react-motion';
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ErrorBoundary from '../components/errorBoundry';
-import Reports from '../pages/reports';
 import ReportsDetail from '../pages/reports/reportsDetail.container';
 import '../pageAnimations.css';
 
@@ -32,6 +31,7 @@ import Savings from "../pages/Savings/Savings";
 import ViewSavingAccount from "../pages/Savings/ViewSavingAccount";
 import Categories from "../pages/Categories/Categories";
 import AddCategory from "../pages/Categories/AddCategory";
+import NewReports from "../pages/reports/NewReports";
 
 const { Header, Content } = Layout;
 
@@ -67,7 +67,7 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/transactions/:id" component={TransactionsDetail} />
                                         <Route path="/dashboard/transactions" component={Transactions} />
                                         <Route path="/dashboard/reports/:year/:month" component={ReportsDetail} />
-                                        <Route path="/dashboard/reports" component={Reports} />
+                                        <Route path="/dashboard/reports" component={NewReports} />
                                         <Route path="/dashboard/add/" component={AddIncome} />
                                         <Route path="/dashboard/add/income" component={AddIncome} />
                                         <Route path="/dashboard/accounts" component={Accounts} />
