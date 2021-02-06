@@ -2,3 +2,8 @@ h4 {
     font-size: 32px;
     font-family: 'Raleway', sans-serif;
 }
+.site-layout-content {
+    min-height: 280px;
+    padding: 24px;
+    background: #fff;
+}
