@@ -56,7 +56,10 @@ class Form extends React.Component {
 const FormEnhancer = compose(
   firebaseConnect((props) => (
     [
-      'Categories',
+      {
+        path: `Categories/${props.uid}`,
+        storeAs: 'Categories'
+      },
       {
         path: `accounts/${props.uid}/`,
         storeAs: 'paymentMode',

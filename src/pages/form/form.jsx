@@ -32,7 +32,6 @@ const AddExpense = ({ onSubmit, reset, paymentMode = [], categories, handleSavin
         }
         handleSavings(values);
     };
-    console.log(loanAccounts, 'loanAccounts');
     return (
         <Content>
             <Row type="flex" justify='center'>
@@ -138,7 +137,7 @@ const AddExpense = ({ onSubmit, reset, paymentMode = [], categories, handleSavin
                                                                 value={item.key}
                                                                 key={item.key}
                                                             >
-                                                                {item.value}
+                                                                {item.value.title}
                                                             </Option>
                                                         )
                                                     )
