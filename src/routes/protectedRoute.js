@@ -30,6 +30,8 @@ import Accounts from '../pages/Accounts';
 import Loans from "../pages/Loans/Loans";
 import Savings from "../pages/Savings/Savings";
 import ViewSavingAccount from "../pages/Savings/ViewSavingAccount";
+import Categories from "../pages/Categories/Categories";
+import AddCategory from "../pages/Categories/AddCategory";
 
 const { Header, Content } = Layout;
 
@@ -71,6 +73,9 @@ const PrivateRouteComponent = props => (
                                         <Route path="/dashboard/accounts" component={Accounts} />
                                         <Route path="/dashboard/income/add" component={AddIncome} />
                                         <Route path="/dashboard/loans" component={Loans} />
+                                        <Route path="/dashboard/categories" exact component={Categories} />
+                                        <Route path="/dashboard/categories/add" exact component={AddCategory} />
+                                        <Route path="/dashboard/categories/edit/:id" exact component={AddCategory} />
                                         <Route path="/dashboard/savings/:id" component={ViewSavingAccount} />
                                         <Route path="/dashboard/savings" component={Savings} />
                                         <Route path="/" component={Dashboard}  />
