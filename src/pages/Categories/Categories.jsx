@@ -1,15 +1,37 @@
-import React  from 'react';
-import {Col, Row, List, Avatar, Button} from "antd";
+import React, {useState} from 'react';
+import {Col, Row, List, Avatar, Button, Modal} from "antd";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {firebaseConnect} from "react-redux-firebase";
 import {Link} from "react-router-dom";
 
-const Categories = ({ categories, history }) => {
+const Categories = ({ categories, history, firebase, uid }) => {
+    const [modal, updateModal] = useState(false);
+    const [selected, updateSelected] = useState();
     if (!categories) return null;
+
+    const confirmDeleteCategory = (id) => {
+        updateSelected(id);
+        updateModal(true);
+    }
+    const deleteCategory = () => {
+        updateModal(false);
+        firebase.remove(`Categories/${uid}/${selected}`);
+    }
+
     return (
         <div className="site-layout-content">
+            <Modal
+                title="Delete Category"
+                visible={modal}
+                onOk={deleteCategory}
+                onCancel={() => updateModal(false)}
+                okText="Delete"
+                cancelText="Cancel"
+            >
+                <p>Are you sure you want to delete?</p>
+            </Modal>
             <Row>
                 <Col span={12}>
 
@@ -33,7 +55,11 @@ const Categories = ({ categories, history }) => {
                                             state: {...item.value}
                                         })}
                                         type="link"
-                                    >Edit</Button>]}
+                                    >Edit</Button>,
+                                <Button
+                                    type="link"
+                                    onClick={() => confirmDeleteCategory(item.key)}
+                                >Delete</Button>]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar />}

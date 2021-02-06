@@ -42,7 +42,7 @@ const AddCategories = ({ firebase, uid, history, match, location }) => {
                         onFinish={onFinish}
                         initialValues={
                             edit ? { title: "", description: "" }
-                            : {...location.state}}
+                            : {title: "", description: "",...location.state}}
                         onFinishFailed={onFinishFailed}
                     >
                         <Form.Item
