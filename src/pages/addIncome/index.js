@@ -16,7 +16,8 @@ class Income extends React.Component {
         .then(() => {
           this.setState(()=>({formSubmit:true}));
           if (values.mode) {
-              const balance = parseInt(values.mode.value.balance, 10) + parseInt(values.amount, 10);
+              //const balance = parseInt(values.mode.value.balance, 10) + parseInt(values.amount, 10);
+              const balance = 0;
               this.props.firebase.update(`accounts/${uid}/${values.mode.key}`,{ ...values.mode.value, balance });
           }
         });
@@ -37,10 +38,15 @@ class Income extends React.Component {
 }
 
 const FormEnhancer = compose(
-  firebaseConnect((props) => (['Categories',{
-    path: `accounts/${props.uid}/`,
-    storeAs: 'paymentMode',
-  },
+  firebaseConnect((props) => ([
+      {
+          path: `Categories/${props.uid}`,
+          storeAs: 'Categories'
+      },
+      {
+        path: `accounts/${props.uid}/`,
+        storeAs: 'paymentMode',
+      },
   ])),
   connect(({firebase}) => ({
     categories: firebase.ordered.Categories,

@@ -17,7 +17,7 @@ import { Formik, Form, Field } from 'formik';
 const {Content} = Layout;
 const Option = Select.Option;
 
-const AddIncome = ({ onSubmit, reset, paymentMode }) => {
+const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
   const handleSubmit = (values) => {
     const payload = { ...values };
     const getMode = paymentMode ? paymentMode.find(k => k.key === values.mode) : null;
@@ -58,9 +58,11 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                     <div style={{ marginBottom: 20 }}>
                       <Row>
                         <Col span={12}>
+                          <label htmlFor="mode">Payment Mode</label>
                           <Field
                               name="mode"
                               style={{ width: '100%' }}
+                              defaultValue=""
                               component={Select}
                               onChange={(e) => setFieldValue('mode', e)}
                           >
@@ -75,6 +77,33 @@ const AddIncome = ({ onSubmit, reset, paymentMode }) => {
                                   )
                               )
                             }
+                          </Field>
+                        </Col>
+                      </Row>
+                    </div>
+                    <div style={{ marginBottom: 20 }}>
+                      <Row>
+                        <Col span={12}>
+                          <label htmlFor="category">Category</label>
+                          <Field
+                              name="mode"
+                              defaultValue=""
+                              style={{ width: '100%' }}
+                              component={Select}
+                              onChange={(e) => setFieldValue('mode', e)}
+                          >
+                            <Option value=''>
+                              -- Select Category --
+                            </Option>
+                            {
+                              categories && categories.map(item => (
+                                      <Option value={item.key} key={item.key}>
+                                        {item.value.title}
+                                      </Option>
+                                  )
+                              )
+                            }
+
                           </Field>
                         </Col>
                       </Row>
