@@ -86,11 +86,11 @@ const AddIncome = ({ onSubmit, reset, paymentMode, categories }) => {
                         <Col span={12}>
                           <label htmlFor="category">Category</label>
                           <Field
-                              name="mode"
+                              name="category"
                               defaultValue=""
                               style={{ width: '100%' }}
                               component={Select}
-                              onChange={(e) => setFieldValue('mode', e)}
+                              onChange={(e) => setFieldValue('category', e)}
                           >
                             <Option value=''>
                               -- Select Category --
