@@ -126,7 +126,7 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                 </Col>
             </Row>
             <Row>
-                <Col span={4}>
+                <Col span={12}>
                     <Select value={form.category} onChange={(e) => handleChange("category", e)} name="category" style={{ width: "100%"}} defaultValue="">
                         <Select.Option value="">Select Category</Select.Option>
                         {categories && categories.map((category) => (
@@ -134,7 +134,7 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                         ))}
                     </Select>
                 </Col>
-                <Col span={4}>
+                <Col span={12}>
                     <Select name="year" style={{ width: "100%"}} defaultValue="">
                         <Select.Option value="">Select Year</Select.Option>
                         {years && years.map((year) => (
@@ -142,7 +142,7 @@ const NewReports = ({ data, categories, firebase, uid }) => {
                         ))}
                     </Select>
                 </Col>
-                <Col span={4}>
+                <Col span={12}>
                     <Select name="month" style={{ width: "100%"}} defaultValue="">
                         <Select.Option value="">Select Month</Select.Option>
                         {months && months.map((month) => (
