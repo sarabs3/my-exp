@@ -64,7 +64,7 @@ const years = [
     }
 ];
 const NewReports = ({ data, categories, firebase, uid }) => {
-    const [form, updateForm] = useState({category: ""});
+    const [form, updateForm] = useState({category: "", dataType: "expense"});
     const [records, updateRecords] = useState(data || []);
     const handleChange = (name, value) => {
         updateForm({ ...form, [name]: value })
@@ -72,21 +72,35 @@ const NewReports = ({ data, categories, firebase, uid }) => {
     useEffect(() => {
         updateRecords(data);
     }, [data]);
+
+    const updateRecord = (a) => {
+        const newRecords = [];
+        const result = a.val();
+        for (let key in result) {
+            newRecords.push({ key, value: result[key] })
+        }
+        updateRecords(newRecords);
+    }
     const getReportData = () => {
-        firebase.ref(`data/${uid}`)
-            .orderByChild('category')
-            .equalTo(form.category)
-            .limitToLast(20)
-            .once("value")
-            .then(a => {
-                const newRecords = [];
-                const result = a.val();
-                for (let key in result) {
-                    newRecords.push({ key, value: result[key] })
-                }
-                updateRecords(newRecords);
-            })
-            .catch((e) => console.log('error', e));
+        const expenseRef = firebase.ref(`data/${uid}`);
+        const incomeRef = firebase.ref(`income/${uid}`);
+        const expenseCategoryQuery = expenseRef.orderByChild('category').equalTo(form.category);
+        const incomeCategoryQuery = incomeRef.orderByChild('category').equalTo(form.category);
+        const incomeQuery = incomeRef.orderByChild('category');
+        if (form.category && form.dataType === 'income') {
+            incomeCategoryQuery.once("value")
+                .then(updateRecord)
+                .catch((e) => console.log('error', e));
+        }
+        if (form.category && form.dataType === 'expense') {
+            expenseCategoryQuery.once("value")
+                .then(updateRecord)
+                .catch((e) => console.log('error', e));
+        }if (!form.category && form.dataType === 'income') {
+            incomeQuery.once("value")
+                .then(updateRecord)
+                .catch((e) => console.log('error', e));
+        }
     }
     if (!records) return null;
     return (
@@ -94,6 +108,21 @@ const NewReports = ({ data, categories, firebase, uid }) => {
             <Row>
                 <Col span={12}>
                     <PageTitle>Reports</PageTitle>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12}>
+                    <Select
+                        value={form.dataType}
+                        onChange={(e) => handleChange("dataType", e)}
+                        name="dataType"
+                        style={{ width: "100%"}}
+                        defaultValue=""
+                    >
+                        <Select.Option value="">Select Category</Select.Option>
+                            <Select.Option value="expense">Expense</Select.Option>
+                            <Select.Option value="income">Income</Select.Option>
+                    </Select>
                 </Col>
             </Row>
             <Row>
