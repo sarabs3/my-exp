@@ -9,7 +9,7 @@ import EditTwoTone from "@ant-design/icons/lib/icons/EditTwoTone";
 import DeleteTwoTone from "@ant-design/icons/lib/icons/DeleteTwoTone";
 import confirm from "antd/es/modal/confirm";
 
-const TransectionsDetails = ({data, title, history, firebase, uid, match: { params } }) => (
+const TransectionsDetails = ({data = [], title, history, firebase, uid, match: { params } }) => (
     data ? (
         <Card
             title={title}
@@ -26,7 +26,7 @@ const TransectionsDetails = ({data, title, history, firebase, uid, match: { para
             }
         >
 
-        {data.map(({key, value}) => <p key={key}> {key}: <b>{value}</b></p>)}
+        {data.filter(k => k.key !== "mode").map(({key, value}) => <p key={key}> {key}: <b>{value}</b></p>)}
         </Card>
     ) : null
 );
