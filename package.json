@@ -38,7 +38,7 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "firebase-tools": "^7.0.0",
+    "firebase-tools": "^11.29.1",
     "react-scripts": "1.0.0",
     "react-test-renderer": "^16.7.0"
   },
